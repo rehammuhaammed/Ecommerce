@@ -1,0 +1,40 @@
+<div class="mt-2 px-4 py-3 text-sm text-red-800 bg-red-50 border border-red-300 rounded-lg shadow-sm flex items-start gap-3">
+  <!-- Icon once -->
+  <svg class="w-5 h-5 mt-1 text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+       viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M12 9v2m0 4h.01M12 5a7 7 0 100 14 7 7 0 000-14z"/>
+  </svg>
+
+  <!-- Error messages -->
+  <ul class="space-y-1">
+
+    @if(signupForm.get('name')?.getError('required') && signupForm.get('name')?.touched){
+        <li>Name is required.</li>
+    }
+    @if(signupForm.get('name')?.getError('minlength')){
+        <li>Name must be at least 3 characters long.</li>
+    }
+    @if(signupForm.get('name')?.getError('maxlength')){
+        <li>Name must not exceed 20 characters.</li>
+    }
+    @if (signupForm.get('phone')?.getError('required')&& signupForm.get('phone')?.touched) {
+        <li>Phone number is required.</li>
+    }
+    @if (signupForm.get('phone')?.getError('pattern')&& signupForm.get('phone')?.touched) {
+        <li>Phone number must be a valid Egyptian number.</li>
+    }
+    @if (signupForm.get('email')?.getError('required')&& signupForm.get('email')?.touched) {
+        <li>Email is required.</li>
+    }
+    @if (signupForm.get('email')?.getError('email')&& signupForm.get('email')?.touched) {
+        <li>Please enter a valid email address.</li>
+    }
+    @if (signupForm.get('password')?.getError('required')&& signupForm.get('password')?.touched) {
+        <li>Password is required.</li>
+    }
+    @if (signupForm.get('password')?.getError('pattern')&& signupForm.get('password')?.touched) {
+        <li>Password must be at least 6 characters with letters or numbers only.</li>
+    }
+  </ul>
+</div>

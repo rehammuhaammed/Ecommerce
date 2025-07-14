@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@theme{
+  --color-mainColor:#EFA19E;
+  --color-mainBg:#F8EAE9;
+  --color-hoverColor:#B4D6F1;
+}
+
+@font-face {
+  font-family: 'Caveat';
+  src: url('assets/fonts/Caveat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('assets/fonts/Nunito-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('assets/fonts/Poppins-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Outfit';
+  src: url('assets/fonts/Outfit-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: url('assets/fonts/OpenSans_Condensed-Regular.ttf') format('truetype');
+}
+
+
+body{
+  background-color: #F8EAE9;
+  font-family:Outfit;
+  font-weight: 600;
+ 
+
+}

@@ -1,0 +1,58 @@
+<div class="w-full my-10 bg-gradient-to-bl from-[#B4D6F1] via-[#ebe4e4] to-[#F8EAE9] bg-white mx-auto max-w-xl rounded-2xl shadow-lg p-8">
+    <div class="flex justify-center">
+         <img src="images/register.png" class="w-[130px]  p-5" alt="Avatar" />
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Name" formControlName="name" class="w-full placeholder:text-sm placeholder:font-medium text-[#235a6f] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
+          @if(registerForm.get('name')?.errors && registerForm.get('name')?.touched){
+            <app-alert [signupForm]="registerForm" ></app-alert>
+          }
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="phone">Phone</label>
+          <input type="text" id="phone" name="phone" placeholder="Phone" formControlName="phone" class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor" >
+          @if(registerForm.get('phone')?.errors && registerForm.get('phone')?.touched){
+            <app-alert [signupForm]="registerForm" ></app-alert>
+          }
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Email" formControlName="email" class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor" >
+          @if(registerForm.get('email')?.errors && registerForm.get('email')?.touched){
+            <app-alert [signupForm]="registerForm" ></app-alert>
+          }
+         </div>
+        <div>
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="********" formControlName="password" class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor" >
+          @if(registerForm.get('password')?.errors && registerForm.get('password')?.touched){
+            <app-alert [signupForm]="registerForm" ></app-alert>
+          }
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="c_password">Confirm Password</label>
+          <input type="password" id="c_password" name="c_password" placeholder="********" formControlName="rePassword" class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor" >
+          <!-- @if(registerForm.get()?.errors && registerForm.get()?.touched){
+            <app-alert [signupForm]="registerForm" ></app-alert>
+          } -->
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button
+          type="submit"
+          class="w-full text-[#235a6f] bg-hoverColor  hover:bg-hoverColor/70 cursor-pointer py-2 rounded-lg "
+        >
+          Sign Up
+        </button>
+      </div>
+
+      <div class="mt-4 text-center text-sm text-gray-600">
+        Already have an account?
+        <a href="#" class="text-[#235a6f] hover:underline">Login here</a>
+      </div>
+    </form>
