@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import{FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
+import { AbstractControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-alert',
   imports: [ReactiveFormsModule],
@@ -7,7 +8,8 @@ import{FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/f
   styleUrl: './alert.component.css'
 })
 export class AlertComponent {
-  @Input() signupForm!:FormGroup
-
+  @Input() control!: AbstractControl;
+  @Input() fieldName!: string;
+  @Input() form!: FormGroup;
 
 }

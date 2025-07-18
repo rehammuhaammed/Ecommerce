@@ -7,7 +7,7 @@
         <span class=" logo self-center text-[40px] font-semibold whitespace-nowrap">Haulify</span>
        
     </a>
-     <div class="absolute top-[66px] left-[28px]  textLogo text-[20px] ">For the love of the haul</div>
+     <div class="absolute top-[66px] left-[28px]  text-[#7DB1C7] text-[20px] ">For the love of the haul</div>
     <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
@@ -67,16 +67,16 @@
         </li>
         @if(islogged()){
         <li>
-          <a   class="block py-2 px-3   md:p-2  cursor-pointer " aria-current="page">signOut</a>
+          <a (click)="signout()" class="block py-2 px-3   md:p-2  cursor-pointer transition  hover:bg-[#a8c8e3] rounded-[12px]" aria-current="page">signOut</a>
         </li>
        
         }
        @else {
          <li>
-          <a  class="block py-2 px-3   md:p-2"   routerLinkActive="bg-hoverColor rounded-[12px]" routerLink="login"  aria-current="page">login</a>
+          <a  class="block py-2 px-3   md:p-2"routerLinkActive="bg-[#a8c8e3]  rounded-[12px]" routerLink="/login"  aria-current="page">login</a>
         </li>
         <li>
-          <a  class="block py-2 px-3   md:p-2  "  routerLinkActive="bg-hoverColor rounded-[12px]" routerLink="register" aria-current="page">register</a>
+          <a  class="block py-2 px-3   md:p-2  "routerLinkActive="bg-[#a8c8e3]  rounded-[12px]" routerLink="/register" aria-current="page">register</a>
         </li>
        }
        

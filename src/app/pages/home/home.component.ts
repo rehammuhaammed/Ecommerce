@@ -4,13 +4,16 @@ import { Iproducts } from '../../shared/interfaces/iproducts';
 import { CategoriesService } from '../../core/services/category/categories.service';
 import { Icategory } from '../../shared/interfaces/icategory';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { Router, RouterLink } from '@angular/router';
+import { SearchPipe } from '../../shared/pipes/search.pipe';
+import { FormsModule } from '@angular/forms';
 
 
 
 
 @Component({
   selector: 'app-home',
-  imports:[CarouselModule],
+  imports:[CarouselModule,RouterLink,SearchPipe,FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   
@@ -18,11 +21,13 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class HomeComponent implements OnInit {
 
+  private readonly router=inject(Router)
   myProducts: Iproducts[] = [];
   metadata: any = {};
   currentPage: number = 1;
   pages: number[] = [];
   myCategories:Icategory[]=[]
+  searchItem:string=''
 
   customOptions: OwlOptions = {
     loop: true,
@@ -54,8 +59,8 @@ export class HomeComponent implements OnInit {
 
   FadeOptions: OwlOptions = {
         loop: true,
-        mouseDrag: true,
-        touchDrag: true,
+        mouseDrag: false,
+        touchDrag: false,
         pullDrag: false,
         dots: false,
         autoplay: true,
@@ -108,4 +113,11 @@ this.categoriesService.getCategories().subscribe({
   
 }
 
+
+
+
+
+
 }
+
+

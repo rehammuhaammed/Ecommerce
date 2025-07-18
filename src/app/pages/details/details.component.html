@@ -1,1 +1,83 @@
-<p>details works!</p>
+<!-- Container -->
+<div class="max-w-7xl text-[#7c4947] mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+
+  <!-- Product Images -->
+  <div>
+    <img (click)="openModal(productDetails.imageCover)" data-modal-target="popup-modal" data-modal-toggle="popup-modal"  [src]="productDetails.imageCover" alt="Main Product Image"
+         class="w-full cursor-pointer h-[600px] object-cover rounded-xl shadow-md border shadow-[#edbfbd] border-gray-200" />
+
+    <!-- Thumbnails -->
+    @if(productDetails.images){
+        <div class="flex gap-3 mt-4">
+      @for (img of productDetails.images ;track $index  ) {
+        <img (click)="openModal(img)" data-modal-target="popup-modal" data-modal-toggle="popup-modal"  [src]="img" alt="Thumbnail"
+             class="w-20 h-20 object-cover rounded-md border border-mainColor hover:ring-2 hover:ring-hoverColor cursor-pointer" />
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Product Details -->
+  <div class="flex flex-col py-16  gap-8">
+
+    <!-- Name + Price -->
+    <div>
+      <h1 class="text-3xl font-bold   mb-3"> {{productDetails.title}} </h1>
+        <p class="text-2xl font-semibold  mb-3"> {{productDetails.price}} EGP </p>
+
+
+         <!-- Rating -->
+        <div class="flex items-center gap-1">
+        <p class="text-sm "> {{productDetails.ratingsAverage}}  </p>
+        @for (star of [1, 2, 3, 4, 5]; let i = $index; track $index) {
+            @if (i < Math.floor(productDetails.ratingsAverage)) {
+            <!-- نجمة كاملة -->
+            <i class="fas fa-star text-amber-300"></i>
+            } @else if (i === Math.floor(productDetails.ratingsAverage) && (productDetails.ratingsAverage % 1) >= 0.2) {
+            <!-- نصف نجمة -->
+           <i class="fas fa-star-half-alt text-amber-300"></i>
+            } @else {
+            <!-- نجمة فاضية -->
+             <i class="far fa-star text-gray-300"></i>
+            }
+                }
+        </div>
+    </div>
+
+   
+   
+
+    <!-- Description -->
+    <div>
+      <h2 class="text-lg font-semibold  mb-1">Description</h2>
+      <p class=" leading-relaxed font-medium"> {{productDetails.description}} </p>
+    </div>
+
+    <!-- Quantity & Add to Cart -->
+    <div class="flex items-center gap-4">
+      
+      <div class="flex items-center border border-mainColor rounded-md">
+        <button (click)="min()" class="px-3 py-1 text-lg cursor-pointer hover:bg-mainColor hover:rounded-md  transition ">-</button>
+        <span class="px-4">{{quantity}}  </span>
+        <button (click)="plus()" class="px-3 py-1 text-lg  cursor-pointer hover:bg-mainColor hover:rounded-md transition ">+</button>
+      </div>
+    </div>
+
+    <!-- Add to Cart Button -->
+    <button class="mt-4 uppercase w-fit bg-mainColor text-[#7c4947] px-6 py-2 rounded-lg hover:bg-mainColor/90 cursor-pointer transition">
+    add to cart
+    </button>
+
+    <!-- Category -->
+    <p class="text-sm  ">
+      Category: <span class="font-medium ">{{productDetails.category?.name}}  </span>
+    </p>
+    <p class="text-sm  ">
+     Brand: <img class="w-[50px] mt-1 rounded-md" [src]="productDetails.brand?.image" alt="">
+    </p>
+
+    
+  </div>
+</div>
+
+<app-modal [current_Img]="currentimg"></app-modal>
