@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     min-height: 100vh;
-    background-image: url(../../../../public/images/error.svg);
+    background-image: url(../../../../public/images/notFound.png);
     background-repeat: no-repeat;
     background-position: center;
 

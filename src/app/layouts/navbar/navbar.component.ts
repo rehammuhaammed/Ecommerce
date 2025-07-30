@@ -1,12 +1,16 @@
 import { AuthService } from './../../core/services/auth/auth.service';
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, computed, inject, input, OnInit, Signal } from '@angular/core';
 import { FlowbiteService } from '../../core/services/flowbite/flowbite.service';
 import { initFlowbite } from 'flowbite';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { MytranslateService } from '../../core/services/mytranslate/mytranslate.service';
+import { CartService } from '../../core/services/cart/cart.service';
+import { WishlistService } from '../../core/services/wishlist/wishlist.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink,RouterLinkActive],
+  imports: [RouterLink,RouterLinkActive,TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -15,14 +19,41 @@ constructor(private flowbiteService: FlowbiteService) {}
 
  private readonly router=inject(Router)
  private readonly authService=inject(AuthService)
-
+ private readonly mytranslateService=inject(MytranslateService)
+ private readonly translateService=inject(TranslateService)
+ private readonly cartService=inject(CartService)
+ private readonly wishlistService=inject(WishlistService)
+ cartItemsNumber:Signal<number> =computed(()=>this.cartService.cartItems())
+ wishListItemsNumber:Signal<number> =computed(()=>this.wishlistService.whisListNum())
+islogged=input<boolean>(false)
   ngOnInit(): void {
     this.flowbiteService.loadFlowbite((flowbite) => {
       initFlowbite();
     });
+
+   if(this.islogged()){
+    this.cartService.GetLoggedusercart().subscribe({
+      next:(res)=>{
+        this.cartService.cartItems.set(res.numOfCartItems)
+        
+      }
+    })
+    this.wishlistService.GetLoggedUserWishlist().subscribe({
+      next:(res)=>{
+        
+        this.wishlistService.whisListNum.set(res.count)
+        
+        
+      }
+    
+    
+    })
+
+   }
+
   }
 
-  islogged=input<boolean>(true)
+  
 
   signout(){
     // 1)remove token
@@ -45,4 +76,11 @@ constructor(private flowbiteService: FlowbiteService) {}
 
   }
 
+  changelang(lang:string){
+    this.mytranslateService.changeLang(lang)
+  }
+
+  tranlation(l:string):boolean{
+   return this.translateService.currentLang == l
+  }
 }

@@ -1,62 +1,84 @@
+<div class="mt-2 px-3 py-3 text-sm text-red-800 bg-red-50 border border-red-300 rounded-lg shadow-sm flex items-start gap-3">
+  <svg class="w-5 h-5 mt-1 text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+       viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M12 9v2m0 4h.01M12 5a7 7 0 100 14 7 7 0 000-14z"/>
+  </svg>
 
-  <div class="mt-2 px-3 py-3 text-sm text-red-800 bg-red-50 border border-red-300 rounded-lg shadow-sm flex items-start gap-3">
-    <svg class="w-5 h-5 mt-1 text-red-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2"
-         viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round"
-            d="M12 9v2m0 4h.01M12 5a7 7 0 100 14 7 7 0 000-14z"/>
-    </svg>
-    <ul class="space-y-1">
-      <!-- Name field errors -->
-      @if (fieldName === 'name') {
-        @if (control.getError('required')) {
-          <li>Name is required.</li>
-        }
-        @if (control.getError('minlength')) {
-          <li>Name must be at least 3 characters long.</li>
-        }
-        @if (control.getError('maxlength')) {
-          <li>Name must not exceed 20 characters.</li>
-        }
+  <ul class="space-y-1">
+    <!-- Name -->
+    @if (fieldName === 'name') {
+      @if (control.getError('required')) {
+        <li>{{ 'validation.name.required' | translate }}</li>
       }
-      
-      <!-- Phone field errors -->
-      @if (fieldName === 'phone') {
-        @if (control.getError('required')) {
-          <li>Phone number is required.</li>
-        }
-        @if (control.getError('pattern')) {
-          <li>Phone number must be a valid Egyptian number.</li>
-        }
+      @if (control.getError('minlength')) {
+        <li>{{ 'validation.name.minlength' | translate }}</li>
       }
-      
-      <!-- Email field errors -->
-      @if (fieldName === 'email') {
-        @if (control.getError('required')) {
-          <li>Email is required.</li>
-        }
-        @if (control.getError('email')) {
-          <li>Please enter a valid email address.</li>
-        }
+      @if (control.getError('maxlength')) {
+        <li>{{ 'validation.name.maxlength' | translate }}</li>
       }
-      
-      <!-- Password field errors -->
-      @if (fieldName === 'password') {
-        @if (control.getError('required')) {
-          <li>Password is required.</li>
-        }
-        @if (control.getError('pattern')) {
-          <li>Password must be at least 6 characters with letters or numbers only.</li>
-        }
+    }
+
+    <!-- Phone -->
+    @if (fieldName === 'phone') {
+      @if (control.getError('required')) {
+        <li>{{ 'validation.phone.required' | translate }}</li>
       }
-      
-      <!-- Confirm Password field errors -->
-      @if (fieldName === 'rePassword') {
-        @if (control.getError('required')) {
-          <li>Confirm password is required.</li>
-        }
-        
-          <li>Passwords do not match.</li>
-        
+      @if (control.getError('pattern')) {
+        <li>{{ 'validation.phone.pattern' | translate }}</li>
       }
-    </ul>
-  </div>
+    }
+
+    <!-- Email -->
+    @if (fieldName === 'email') {
+      @if (control.getError('required')) {
+        <li>{{ 'validation.email.required' | translate }}</li>
+      }
+      @if (control.getError('email')) {
+        <li>{{ 'validation.email.invalid' | translate }}</li>
+      }
+    }
+
+    <!-- Password -->
+    @if (fieldName === 'password') {
+      @if (control.getError('required')) {
+        <li>{{ 'validation.password.required' | translate }}</li>
+      }
+      @if (control.getError('pattern')) {
+        <li>{{ 'validation.password.pattern' | translate }}</li>
+      }
+    }
+
+    <!-- Confirm Password -->
+    @if (fieldName === 'rePassword') {
+      @if (control.getError('required')) {
+        <li>{{ 'validation.rePassword.required' | translate }}</li>
+      }
+      <li>{{ 'validation.rePassword.notMatch' | translate }}</li>
+    }
+
+    <!-- Code -->
+    @if (fieldName === 'code') {
+      @if (control.getError('required')) {
+        <li>{{ 'validation.code.required' | translate }}</li>
+      }
+      @if (control.getError('pattern')) {
+        <li>{{ 'validation.code.pattern' | translate }}</li>
+      }
+    }
+
+    <!-- Address -->
+    @if (fieldName === 'details') {
+      @if (control.getError('required')) {
+        <li>{{ 'validation.details.required' | translate }}</li>
+      }
+    }
+
+    <!-- City -->
+    @if (fieldName === 'city') {
+      @if (control.getError('required')) {
+        <li>{{ 'validation.city.required' | translate }}</li>
+      }
+    }
+  </ul>
+</div>

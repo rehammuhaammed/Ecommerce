@@ -1,0 +1,164 @@
+{
+  "navbar": {
+    "slogan": "For the love of the haul",
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "brands": "Brands",
+    "signOut": "Sign Out",
+    "login": "Login",
+    "register": "Register"
+  },
+  "home": {
+    "popularCategories": "Popular Categories",
+    "popularProducts":"Popular Products",
+    "searchPlaceholder": "Search...",
+    "addToCart": "Add to Cart",
+    "priceUnit": "EGP",
+    "rating": "Rating",
+    "paginationDots": "...",
+    "moreProductsText": "You haven't seen everything yet .....",
+    "showingResults": "Showing",
+    "sortDefault": "Default",
+    "sortPriceLow": "Price: Low to High",
+    "sortPriceHigh": "Price: High to Low",
+    "sortRating": "Top Rated"
+  },
+   "product": {
+    "description": "Description",
+    "addToCart": "Add to cart",
+    "category": "Category",
+    "brand": "Brand",
+    "priceUnit": "EGP",
+    "ratingLabel": "Rating"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "clear": "Clear Cart",
+    "product": "Product",
+    "price": "Price",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "orderTotal": "Order Total:",
+    "includes": "Includes tax and shipping",
+    "checkout": "Checkout",
+    "emptyTitle": "Your Cart is Empty",
+    "emptyText": "Looks like you haven't added anything yet.",
+    "browseProducts": "Browse Products"
+  },
+   "shipping": {
+    "title": "Shipping Info",
+    "details": "Address",
+    "detailsPlaceholder": "Add shipping details...",
+    "phone": "Phone",
+    "phonePlaceholder": "Enter your phone number",
+    "city": "City",
+    "cityPlaceholder": "Enter your city",
+    "continue": "Continue",
+    "cash": "Pay with Cash",
+    "visa": "Pay with Visa Card"
+  },
+  "orders": {
+    "title": "All Orders",
+    "order_id": "Order ID",
+    "created_at": "Created at",
+    "paid": "Paid",
+    "not_paid": "Not Paid",
+    "delivered": "Delivered",
+    "not_delivered": "Not Delivered",
+    "shipping_address": "Shipping Address",
+    "payment_method": "Payment Method",
+    "brand": "Brand",
+    "price": "Price",
+    "quantity": "Quantity",
+    "total": "Total",
+    "tax": "Tax",
+    "shipping": "Shipping"
+  },
+   "auth": {
+    "email": "Email",
+    "email_placeholder": "Enter your email",
+    "send_verification": "Send Verification Code"
+  },
+  "login": {
+    "title": "Sign In",
+    "email": {
+      "label": "Email",
+      "placeholder": "Email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "********"
+    },
+    "submit": "Sign In",
+    "success": "Logged in successfully",
+    "error": "An error occurred during login",
+    "forgetLink": "Forget Password?"
+  },
+  "reset": {
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter your email"
+    },
+    "password": {
+      "label": "New Password",
+      "placeholder": "********"
+    },
+    "submit": "Reset Password",
+    "success": "Password reset successfully!"
+  },
+  "register": {
+    "title": "Create an Account",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signUp": "Sign Up",
+    "loginRedirect": "Already have an account?",
+    "loginLink": "Login here",
+    "success": "Account created successfully",
+    "error": "Something went wrong"
+  },
+  "verify": {
+    "code": {
+      "label": "Verify Code",
+      "placeholder": "Enter 6-digit code"
+    },
+    "submit": "Verify",
+    "successNote": "Note: Code is valid for 10 minutes"
+  },
+  "validation": {
+    "name": {
+      "required": "Name is required.",
+      "minlength": "Name must be at least 3 characters long.",
+      "maxlength": "Name must not exceed 20 characters."
+    },
+    "phone": {
+      "required": "Phone number is required.",
+      "pattern": "Phone number must be a valid Egyptian number."
+    },
+    "email": {
+      "required": "Email is required.",
+      "invalid": "Please enter a valid email address."
+    },
+    "password": {
+      "required": "Password is required.",
+      "pattern": "Password must be at least 6 characters with letters or numbers only."
+    },
+    "rePassword": {
+      "required": "Confirm password is required.",
+      "notMatch": "Passwords do not match."
+    },
+    "code": {
+      "required": "Code is required.",
+      "pattern": "Verify Code must be 6-digit."
+    },
+    "details": {
+      "required": "Address is required."
+    },
+    "city": {
+      "required": "City name is required."
+    }
+  }
+}

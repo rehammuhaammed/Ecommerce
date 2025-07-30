@@ -9,6 +9,7 @@ if(isPlatformBrowser(ID)){
 //Already logged in 
 //Don't allow to return to loginpage by path 
 if(localStorage.getItem('token')!=null){
+  
   return false
 }else{
   return true

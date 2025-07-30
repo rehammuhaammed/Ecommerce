@@ -3,10 +3,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import{AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { Router, RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, AlertComponent,RouterLink],
+  imports: [ReactiveFormsModule, AlertComponent,RouterLink,TranslatePipe],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

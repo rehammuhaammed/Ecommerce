@@ -1,0 +1,164 @@
+{
+  "navbar": {
+    "slogan": "For the love of the haul",
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "categories": "الفئات",
+    "brands": "العلامات التجارية",
+    "signOut": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب"
+  },
+   "home": {
+    "popularCategories": "الفئات الشائعة",
+    "popularProducts":"المنتجات الشائعة",
+    "searchPlaceholder": "ابحث...",
+    "addToCart": "أضف إلى السلة",
+    "priceUnit": "ج.م",
+    "rating": "تقييم",
+    "paginationDots": "...",
+    "moreProductsText": "لم تشاهد كل شيء بعد .....",
+    "showingResults": "عدد المنتجات:",
+    "sortDefault": "الافتراضي",
+    "sortPriceLow": "السعر من الأقل",
+    "sortPriceHigh": "السعر من الأعلى",
+    "sortRating": "حسب التقييم"
+  },
+  "product": {
+    "description": "الوصف",
+    "addToCart": "أضف إلى السلة",
+    "category": "التصنيف",
+    "brand": "العلامة التجارية",
+    "priceUnit": "جنيه",
+    "ratingLabel": "التقييم"
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "clear": "إفراغ السلة",
+    "product": "المنتج",
+    "price": "السعر",
+    "quantity": "الكمية",
+    "remove": "إزالة",
+    "orderTotal": "إجمالي الطلب:",
+    "includes": "يشمل الضرائب والشحن",
+    "checkout": "إتمام الشراء",
+    "emptyTitle": "سلة التسوق فارغة",
+    "emptyText": "يبدو أنك لم تضف أي شيء بعد.",
+    "browseProducts": "تصفح المنتجات"
+  },
+   "shipping": {
+    "title": "معلومات الشحن",
+    "details": "العنوان",
+    "detailsPlaceholder": "أدخل تفاصيل العنوان...",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم الهاتف",
+    "city": "المدينة",
+    "cityPlaceholder": "أدخل اسم المدينة",
+    "continue": "متابعة",
+    "cash": "الدفع نقدًا",
+    "visa": "الدفع ببطاقة فيزا"
+  },
+   "orders": {
+    "title": "كل الطلبات",
+    "order_id": "رقم الطلب",
+    "created_at": "تاريخ الإنشاء",
+    "paid": "مدفوع",
+    "not_paid": "غير مدفوع",
+    "delivered": "تم التوصيل",
+    "not_delivered": "لم يتم التوصيل",
+    "shipping_address": "عنوان الشحن",
+    "payment_method": "طريقة الدفع",
+    "brand": "الماركة",
+    "price": "السعر",
+    "quantity": "الكمية",
+    "total": "الإجمالي",
+    "tax": "الضريبة",
+    "shipping": "الشحن"
+  },
+   "auth": {
+    "email": "البريد الإلكتروني",
+    "email_placeholder": "أدخل بريدك الإلكتروني",
+    "send_verification": "إرسال رمز التحقق"
+  },
+  "login": {
+    "title": "تسجيل الدخول",
+    "email": {
+      "label": "البريد الإلكتروني",
+      "placeholder": "البريد الإلكتروني"
+    },
+    "password": {
+      "label": "كلمة المرور",
+      "placeholder": "********"
+    },
+    "submit": "تسجيل الدخول",
+    "success": "تم تسجيل الدخول بنجاح",
+    "error": "حدث خطأ أثناء تسجيل الدخول",
+    "forgetLink": "هل نسيت كلمة المرور؟"
+  },
+    "reset": {
+    "email": {
+      "label": "البريد الإلكتروني",
+      "placeholder": "ادخل بريدك الإلكتروني"
+    },
+    "password": {
+      "label": "كلمة المرور الجديدة",
+      "placeholder": "********"
+    },
+    "submit": "إعادة تعيين كلمة المرور",
+    "success": "تمت إعادة تعيين كلمة المرور بنجاح!"
+  },
+  "register": {
+    "title": "إنشاء حساب",
+    "name": "الاسم",
+    "phone": "رقم الهاتف",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "signUp": "تسجيل",
+    "loginRedirect": "هل لديك حساب بالفعل؟",
+    "loginLink": "تسجيل الدخول من هنا",
+    "success": "تم إنشاء الحساب بنجاح",
+    "error": "حدث خطأ ما"
+  },
+   "verify": {
+    "code": {
+      "label": "رمز التحقق",
+      "placeholder": "أدخل رمز مكون من 6 أرقام"
+    },
+    "submit": "تحقق",
+    "successNote": "ملاحظة: الرمز صالح لمدة 10 دقائق"
+  },
+  "validation": {
+    "name": {
+      "required": "الاسم مطلوب.",
+      "minlength": "الاسم يجب أن يكون على الأقل 3 أحرف.",
+      "maxlength": "الاسم يجب ألا يزيد عن 20 حرفًا."
+    },
+    "phone": {
+      "required": "رقم الهاتف مطلوب.",
+      "pattern": "رقم الهاتف يجب أن يكون رقم مصري صحيح."
+    },
+    "email": {
+      "required": "البريد الإلكتروني مطلوب.",
+      "invalid": "يرجى إدخال بريد إلكتروني صالح."
+    },
+    "password": {
+      "required": "كلمة المرور مطلوبة.",
+      "pattern": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل (حروف أو أرقام فقط)."
+    },
+    "rePassword": {
+      "required": "تأكيد كلمة المرور مطلوب.",
+      "notMatch": "كلمتا المرور غير متطابقتين."
+    },
+    "code": {
+      "required": "رمز التحقق مطلوب.",
+      "pattern": "يجب أن يتكون رمز التحقق من 6 أرقام."
+    },
+    "details": {
+      "required": "العنوان مطلوب."
+    },
+    "city": {
+      "required": "اسم المدينة مطلوب."
+    }
+  }
+}

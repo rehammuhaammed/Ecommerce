@@ -4,6 +4,7 @@
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
 
+
 @theme{
   --color-mainColor:#EFA19E;
   --color-mainBg:#F8EAE9;
@@ -42,3 +43,34 @@ body{
  
 
 }
+.swal-success {
+  
+   width: 280px;
+  background-color: #F8EAE9;
+  color: #7c4947;
+  font-weight: 500;
+ --swal2-html-container-padding: 18px 8px  5.4px;
+  border-radius: 8px;
+}
+
+.swal-error {
+   width: 280px;
+  background-color: #F8EAE9;
+  color: #7f1d1d;
+ --swal2-html-container-padding: 18px 8px  5.4px;
+  border-radius: 8px;
+}
+.logo{
+    font-family: Caveat;
+    color: #EFA19E ;
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease forwards;
+}
+

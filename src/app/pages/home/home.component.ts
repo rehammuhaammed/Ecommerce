@@ -1,19 +1,24 @@
-import { Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit, ɵɵstylePropInterpolate3} from '@angular/core';
 import { ProductsService } from '../../core/services/product/products.service';
 import { Iproducts } from '../../shared/interfaces/iproducts';
 import { CategoriesService } from '../../core/services/category/categories.service';
 import { Icategory } from '../../shared/interfaces/icategory';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { Router, RouterLink } from '@angular/router';
-import { SearchPipe } from '../../shared/pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '../../core/services/cart/cart.service';
+import { SweetalertService } from '../../core/services/sweetalert/sweetalert.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { WishlistService } from '../../core/services/wishlist/wishlist.service';
+
+
 
 
 
 
 @Component({
   selector: 'app-home',
-  imports:[CarouselModule,RouterLink,SearchPipe,FormsModule],
+  imports:[CarouselModule,RouterLink,FormsModule,TranslatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   
@@ -21,7 +26,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
 
-  private readonly router=inject(Router)
+  private readonly productsService = inject(ProductsService); 
+  private readonly categoriesService = inject(CategoriesService); 
+  private readonly cartService = inject(CartService); 
+    private readonly sweetalertService=inject(SweetalertService)
+    private readonly wishlistService=inject(WishlistService)
+
+
   myProducts: Iproducts[] = [];
   metadata: any = {};
   currentPage: number = 1;
@@ -29,8 +40,11 @@ export class HomeComponent implements OnInit {
   myCategories:Icategory[]=[]
   searchItem:string=''
 
+
+
   customOptions: OwlOptions = {
     loop: true,
+    rtl:true,
     autoplay:true,
     autoplayTimeout:2000,
     autoplayHoverPause:true,
@@ -59,6 +73,8 @@ export class HomeComponent implements OnInit {
 
   FadeOptions: OwlOptions = {
         loop: true,
+        rtl:true,
+        autoplayHoverPause: true,
         mouseDrag: false,
         touchDrag: false,
         pullDrag: false,
@@ -71,33 +87,22 @@ export class HomeComponent implements OnInit {
         items: 1
       };
   
-  private readonly productsService = inject(ProductsService); 
-  private readonly categoriesService = inject(CategoriesService); 
-
   ngOnInit(): void {
-    this.callAPI(this.currentPage);
+
+     this.getWishList()
+      this.callAPI();
       this.callApiCategory()
+     
+            
   }
 
-  callAPI(page:number): void {
-    this.productsService.getProducts(page,30).subscribe({
-
+  callAPI(): void {
+   
+    this.productsService.getAllProducts(12).subscribe({
       next: (res) => {
         this.myProducts = res.data;
-        this.metadata = res.metadata;
-        this.currentPage = this.metadata.currentPage;
-        
-
-          this.pages=[]
-          for (let i = 1; i <= this.metadata.numberOfPages; i++) {
-            this.pages.push(i);
-          }
-       
-        
       },
-      error: (err) => {
-        console.error('Error fetching products', err);
-      }
+      
     });
   }
 
@@ -114,10 +119,55 @@ this.categoriesService.getCategories().subscribe({
 }
 
 
+addToCart(id:string){
+  this.cartService.AddProductToCart(id).subscribe({
+    next:(res)=>{
+      this.sweetalertService.showSuccess(res.message)
+      this.cartService.cartItems.set(res.numOfCartItems)
+      
+    },
 
 
-
-
+  })
 }
 
+toggleWishlist(id: string): void {
+  if (this.Inwishlist(id)) {
+    this.wishlistService.RemoveProductFromWishlist(id).subscribe({
+      next: (res) => {
+       
+        this.wishlistService.whisList.set(res.data)
+        this.sweetalertService.showSuccess('Removed from wishlist');
+      }
+    });
+
+  
+  } else {
+    this.wishlistService.AddproductToWishlist(id).subscribe({
+      next: (res) => {
+        this.wishlistService.whisList.set(res.data)
+        this.sweetalertService.showSuccess('Added to wishlist');
+      }
+    });
+  
+  }
+}
+
+ Inwishlist(productId: string){
+   return this.wishlistService.whisList().includes(productId);
+   console.log(this.wishlistService.whisList().includes(productId));
+   
+ }
+
+getWishList(){
+  this.wishlistService.GetLoggedUserWishlist().subscribe({
+    next:(res)=>{
+
+     ;
+        this.wishlistService.whisList.set(res.data.map((product: any) => product._id))
+
+    }
+  })
+}
+}
 

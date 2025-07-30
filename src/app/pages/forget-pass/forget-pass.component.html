@@ -1,0 +1,61 @@
+<div
+  class="w-full my-10 bg-gradient-to-bl from-[#B4D6F1] via-[#ebe4e4] to-[#F8EAE9] bg-white mx-auto max-w-xl rounded-2xl shadow-lg px-8 py-[82px]">
+  <div class="flex justify-center">
+    <img src="images/register.png" class="w-[130px] p-5" alt="Avatar" />
+  </div>
+
+  <form [formGroup]="forgetForm" (ngSubmit)="sendCode()">
+    <div class="grid grid-cols-1 gap-6">
+      <!-- Email Input -->
+      <div>
+        <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="email">
+          {{ 'auth.email' | translate }}
+        </label>
+        <input (focus)="touched()" type="email" id="email" name="email" formControlName="email"
+          [placeholder]="'auth.email_placeholder' | translate"
+          class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor" />
+        @if(forgetForm.get('email')?.errors && forgetForm.get('email')?.touched){
+        <app-alert [control]="forgetForm.get('email')!" [fieldName]="'email'"></app-alert>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <div class="mt-6">
+        <button type="submit"
+          class="w-[60%] capitalize block mx-auto text-[#235a6f] bg-hoverColor hover:bg-hoverColor/70 cursor-pointer py-2 rounded-lg disabled:bg-[#87a3b0] disabled:text-[#5c737a] disabled:cursor-default">
+          {{ 'auth.send_verification' | translate }}
+        </button>
+      </div>
+
+      <!-- Success Message -->
+      @if(succesMsg){
+      <div
+        class="mt-6 mx-auto px-4 py-3 text-sm text-green-800 bg-green-50 border border-green-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
+        <div>
+          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div>
+          {{ succesMsg }}
+        </div>
+      </div>
+      }
+
+      <!-- Error Message -->
+      @if(errorMsg){
+      <div
+        class="mx-auto px-4 py-3 text-sm text-red-800 bg-red-50 border border-red-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
+        <div>
+          <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+        <div>
+          {{ errorMsg }}
+        </div>
+      </div>
+      }
+    </div>
+  </form>
+</div>

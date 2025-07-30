@@ -13,15 +13,15 @@ export class AuthService {
 UserData:any
 
   signup(data:object):Observable<any>{
-   return this.httpClient.post(`${environment.baseUrl}/auth/signup`,data)
+   return this.httpClient.post(`${environment.baseUrl}/api/v1/auth/signup`,data)
   }
   signin(data:object):Observable<any>{
-   return this.httpClient.post(`${environment.baseUrl}/auth/signin`,data)
+   return this.httpClient.post(`${environment.baseUrl}/api/v1/auth/signin`,data)
   }
 
   decodeToken(){
    const token=localStorage.getItem('token')!
-  this.UserData= jwtDecode(token)
-    console.log( this.UserData);
+   return this.UserData= jwtDecode(token)
+   
   }
 }

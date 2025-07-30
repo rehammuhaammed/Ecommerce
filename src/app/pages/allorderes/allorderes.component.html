@@ -1,0 +1,90 @@
+<section class="max-w-6xl mx-auto px-4 py-10">
+  <h2 class="text-2xl font-bold text-[#235a6f] mb-8">{{ 'orders.title' | translate }}</h2>
+
+  <div class="space-y-10">
+    <!-- Start of Order Card -->
+    @for (item of shippingdata; track item.id) {
+      <div class="bg-[#f6f8fa] rounded-2xl shadow-md p-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
+          <div>
+            <p class="text-[#235a6f] font-semibold">
+              {{ 'orders.order_id' | translate }}:
+              <span class="text-gray-600"> {{ item._id }} </span>
+            </p>
+            <p class="text-sm text-gray-500">
+              {{ 'orders.created_at' | translate }}: {{ item.createdAt | date: 'fullDate' }}
+            </p>
+          </div>
+          <div>
+            <span
+              [class]="{
+                'bg-green-100': item.isPaid,
+                'text-green-700': item.isPaid,
+                'bg-red-100': !item.isPaid,
+                'text-red-700': !item.isPaid
+              }"
+              class="inline-block text-sm px-3 py-1 rounded-lg font-medium">
+              {{ item.isPaid ? ('orders.paid' | translate) : ('orders.not_paid' | translate) }}
+            </span>
+
+            <span
+              [class]="{
+                'bg-blue-100': item.isPaid,
+                'text-blue-700': item.isPaid,
+                'bg-yellow-100': !item.isPaid,
+                'text-yellow-700': !item.isPaid
+              }"
+              class="inline-block text-sm px-3 py-1 rounded-lg font-medium ml-2">
+              {{ item.isDelivered ? ('orders.delivered' | translate) : ('orders.not_delivered' | translate) }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Shipping Info -->
+        <div class="mb-4 text-sm text-[#235a6f]">
+          <p><strong>{{ 'orders.shipping_address' | translate }}:</strong> {{ item.shippingAddress.details }}</p>
+          <p><strong>{{ 'orders.payment_method' | translate }}:</strong> {{ item.paymentMethodType }}</p>
+        </div>
+
+        <!-- Cart Items -->
+        <div class="border-t border-gray-300">
+          @for (prod of item.cartItems; track prod._id) {
+            <div class="border-t border-b border-gray-300 flex items-center justify-between py-4 gap-4">
+              <div class="flex items-center gap-3">
+                <img [src]="prod.product.imageCover" class="w-16 h-16 rounded-md object-cover" />
+                <div class="text-sm">
+                  <p class="text-[#235a6f] font-semibold">
+                    {{ prod.product.title.split(' ').slice(0, 3).join(' ') }}
+                  </p>
+                  <p class="text-gray-500 text-xs">
+                    {{ 'orders.brand' | translate }}: {{ prod.product.brand.name }}
+                  </p>
+                </div>
+              </div>
+              <div class="text-sm text-[#235a6f] text-right">
+                <p>
+                  {{ 'orders.price' | translate }}:
+                  <strong>{{ prod.price }} EGP</strong>
+                </p>
+                <p>{{ 'orders.quantity' | translate }}: {{ prod.count }}</p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Order Summary -->
+        <div class="mt-4 text-right">
+          <p class="text-lg text-[#235a6f] font-semibold">
+            {{ 'orders.total' | translate }}: {{ item.totalOrderPrice }} EGP
+          </p>
+          <p class="text-xs text-gray-500">
+            {{ 'orders.tax' | translate }}: {{ item.taxPrice }} EGP |
+            {{ 'orders.shipping' | translate }}: {{ item.shippingPrice }} EGP
+          </p>
+        </div>
+      </div>
+    }
+    <!-- End of Order Card -->
+  </div>
+</section>

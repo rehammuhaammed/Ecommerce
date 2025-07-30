@@ -1,68 +1,85 @@
 <div class="w-full my-10 bg-gradient-to-bl from-[#B4D6F1] via-[#ebe4e4] to-[#F8EAE9] bg-white mx-auto max-w-xl rounded-2xl shadow-lg px-8 py-[82px]">
-    <div class="flex justify-center">
-         <img src="images/register.png" class="w-[130px]  p-5" alt="Avatar" />
-    </div>
+  <div class="flex justify-center">
+    <img src="images/register.png" class="w-[130px] p-5" alt="Avatar" />
+  </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="logIn()">
-      <div class="grid grid-cols-1  gap-6">
-         <div >
-          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Email" formControlName="email" class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor" >
-           @if(loginForm.get('email')?.errors && loginForm.get('email')?.touched){
-            <app-alert [control]="loginForm.get('email')!" [fieldName]="'email'"></app-alert>
-          }
-         </div>
-        <div>
-          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="password">Password</label>
-          <input type="password" id="password" name="password" placeholder="********" formControlName="password" class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor" >
-           @if(loginForm.get('password')?.errors && loginForm.get('password')?.touched){
-            <app-alert [control]="loginForm.get('password')!" [fieldName]="'password'"></app-alert>
-          }
-        </div>
-        
-            <div class="mt-6">
-                <button
-                type="submit"
-                
-                class="w-[60%] block mx-auto text-[#235a6f] bg-hoverColor  hover:bg-hoverColor/70 cursor-pointer py-2 rounded-lg disabled:bg-[#87a3b0] disabled:text-[#5c737a] disabled:cursor-default"
-                >
-                Sign In
-                </button>
-            </div>
-
-            @if(succesMsg){
-                    <div class="mt-6  mx-auto px-4 py-3 text-sm text-green-800 bg-green-50 border border-green-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
-                    <div >
-                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                    </div>
-                    <div >
-                        Logged In successfully
-                    </div>
-
-                </div>
-
-             }
-            @if(errorMsg){
-                    <div class=" mx-auto px-4 py-3 text-sm text-red-800 bg-red-50 border border-red-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
-                    <div >
-                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </div>
-                    <div >
-                        {{errorMsg}}
-                    </div>
-
-                </div>
-            }
-
-
+  <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+    <div class="grid grid-cols-1 gap-6">
+      
+      <!-- Email -->
+      <div>
+        <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="email">
+          {{ 'login.email.label' | translate }}
+        </label>
+        <input
+          (focus)="touched('email')"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="{{ 'login.email.placeholder' | translate }}"
+          formControlName="email"
+          class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor"
+        />
+        @if(loginForm.get('email')?.errors && loginForm.get('email')?.touched){
+          <app-alert [control]="loginForm.get('email')!" [fieldName]="'email'"></app-alert>
+        }
       </div>
 
-      
-      
-     
-    </form>
+      <!-- Password -->
+      <div>
+        <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="password">
+          {{ 'login.password.label' | translate }}
+        </label>
+        <input
+          (focus)="touched('password')"
+          type="password"
+          id="password"
+          name="password"
+          placeholder="{{ 'login.password.placeholder' | translate }}"
+          formControlName="password"
+          class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor"
+        />
+        @if(loginForm.get('password')?.errors && loginForm.get('password')?.touched){
+          <app-alert [control]="loginForm.get('password')!" [fieldName]="'password'"></app-alert>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <div class="mt-6">
+        <button
+          type="submit"
+          class="w-[60%] block mx-auto text-[#235a6f] bg-hoverColor hover:bg-hoverColor/70 cursor-pointer py-2 rounded-lg disabled:bg-[#87a3b0] disabled:text-[#5c737a] disabled:cursor-default"
+        >
+          {{ 'login.submit' | translate }}
+        </button>
+      </div>
+
+      <!-- Success Msg -->
+      @if(succesMsg){
+        <div class="mt-6 mx-auto px-4 py-3 text-sm text-green-800 bg-green-50 border border-green-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
+          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          <div>{{ 'login.success' | translate }}</div>
+        </div>
+      }
+
+      <!-- Error Msg -->
+      @if(errorMsg){
+        <div class="mx-auto px-4 py-3 text-sm text-red-800 bg-red-50 border border-red-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
+          <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <div>{{ errorMsg }}</div>
+        </div>
+      }
+    </div>
+
+    <!-- Forget Password Link -->
+    <div class="mt-4 text-center text-sm text-gray-600">
+      <a routerLink="/forget" class="text-[#235a6f] hover:underline cursor-pointer">
+        {{ 'login.forgetLink' | translate }}
+      </a>
+    </div>
+  </form>
 </div>
