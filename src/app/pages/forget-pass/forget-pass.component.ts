@@ -1,21 +1,24 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, Signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { ForgetPassService } from '../../core/services/ForgetPass/forget-pass.service';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { OfflineService } from '../../core/services/offline.service';
+import { OfflineUiComponent } from "../../shared/components/ui/offline-ui/offline-ui.component";
 
 @Component({
   selector: 'app-forget-pass',
-  imports: [ReactiveFormsModule, AlertComponent,TranslatePipe],
+  imports: [ReactiveFormsModule, AlertComponent, TranslatePipe, OfflineUiComponent],
   templateUrl: './forget-pass.component.html',
   styleUrl: './forget-pass.component.css'
 })
+
 export class ForgetPassComponent  {
-
-
  private readonly forgetPassService=inject(ForgetPassService)
  private readonly router=inject(Router)
+ private readonly offlineService=inject(OfflineService)
+ isoffline: Signal<boolean>=computed(()=>this.offlineService.isOffLine())
  succesMsg:string=''
  errorMsg:string=''
  email:string=''
@@ -64,6 +67,9 @@ sendCode(){
   
 }
 
+ reload(){
+    window.location.reload()
+  }
 
 
 

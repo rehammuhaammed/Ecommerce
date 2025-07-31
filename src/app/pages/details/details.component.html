@@ -1,127 +1,132 @@
-<!-- Container -->
-<div class="max-w-7xl text-[#7c4947] mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-10  ">
 
-  <!-- Product Images -->
-  <div>
-    <img 
-    #modalImage
-      (click)="openModal(productDetails.imageCover)" 
-      data-modal-target="popup-modal" 
-      data-modal-toggle="popup-modal"  
-      [src]="productDetails.imageCover" 
-      alt="Main Product Image"
-      class="w-full cursor-pointer h-[600px] object-cover rounded-xl shadow-md border shadow-[#edbfbd] border-gray-200" 
-    />
+@if(isoffline()){
+<app-offline-ui [isOff]="isoffline()"></app-offline-ui>
+}@else {
+  <!-- Container -->
+      <div class="max-w-7xl text-[#7c4947] mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-2 gap-10  ">
 
-    <!-- Thumbnails -->
-    @if(productDetails.images) {
-      <div class="flex gap-3 mt-4">
-        @for (img of productDetails.images ;track $index) {
+        <!-- Product Images -->
+        <div>
           <img 
           #modalImage
-            (click)="openModal(img)" 
+            (click)="openModal(productDetails.imageCover)" 
             data-modal-target="popup-modal" 
             data-modal-toggle="popup-modal"  
-            [src]="img" 
-            alt="Thumbnail"
-            class="w-20 h-20 object-cover rounded-md border border-mainColor hover:ring-2 hover:ring-hoverColor cursor-pointer" 
+            [src]="productDetails.imageCover" 
+            alt="Main Product Image"
+            class="w-full cursor-pointer h-[600px] object-cover rounded-xl shadow-md border shadow-[#edbfbd] border-gray-200" 
           />
-        }
-      </div>
-    }
-  </div>
 
-  <!-- Product Details -->
-  <div class="flex flex-col md:py-16 sm:py-6 gap-8">
-
-    <!-- Name + Price -->
-    <div>
-      <h1 class="text-3xl font-bold mb-3">{{ productDetails.title }}</h1>
-      <p class="text-2xl font-semibold mb-3">
-        {{ productDetails.price }} {{ 'product.priceUnit' | translate }}
-      </p>
-
-      <!-- Rating -->
-      <div class="flex items-center gap-1">
-        <p class="text-sm">{{ productDetails.ratingsAverage }}</p>
-        @for (star of [1, 2, 3, 4, 5]; let i = $index; track $index) {
-          @if (i < Math.floor(productDetails.ratingsAverage)) {
-            <i class="fas fa-star text-amber-300"></i>
-          } @else if (i === Math.floor(productDetails.ratingsAverage) && (productDetails.ratingsAverage % 1) >= 0.2) {
-            <i class="fas fa-star-half-alt text-amber-300"></i>
-          } @else {
-            <i class="far fa-star text-gray-300"></i>
+          <!-- Thumbnails -->
+          @if(productDetails.images) {
+            <div class="flex gap-3 mt-4">
+              @for (img of productDetails.images ;track $index) {
+                <img 
+                #modalImage
+                  (click)="openModal(img)" 
+                  data-modal-target="popup-modal" 
+                  data-modal-toggle="popup-modal"  
+                  [src]="img" 
+                  alt="Thumbnail"
+                  class="w-20 h-20 object-cover rounded-md border border-mainColor hover:ring-2 hover:ring-hoverColor cursor-pointer" 
+                />
+              }
+            </div>
           }
-        }
-      </div>
-    </div>
-
-    <!-- Description -->
-    <div>
-      <h2 class="text-lg font-semibold mb-1">{{ 'product.description' | translate }}</h2>
-      <p class="leading-relaxed font-medium">{{ productDetails.description }}</p>
-    </div>
-
-    <!-- Add to Cart Button -->
-    <button 
-      (click)="addToCart(productId)" 
-      class="mt-4 flex items-center gap-2 uppercase w-fit bg-mainColor text-[#7c4947] px-6 py-2 rounded-lg hover:bg-mainColor/90 hover:scale-105 cursor-pointer transition-all duration-300"
-    >
-    <i class="fas fa-cart-plus"></i>
-      {{ 'product.addToCart' | translate }}
-    </button>
-
-   
-
-    <!-- Category -->
-    <p class="text-sm">
-      {{ 'product.category' | translate }}:
-      <span class="font-medium">{{ productDetails.category?.name }}</span>
-    </p>
-
-    <!-- Brand -->
-    <p class="text-sm">
-      {{ 'product.brand' | translate }}:
-      <img class="w-[50px] mt-1 rounded-md" [src]="productDetails.brand?.image" alt="">
-    </p>
-
-  </div>
-
-
-
-</div>
-
-<!-- Modal for image preview -->
-<app-modal [current_Img]="currentimg"></app-modal>
-
-<!-- Related Products -->
-  <section class="max-w-7xl mx-auto mt-20  ">
-    <h2 #el class="text-2xl  font-bold mb-4 text-[#235a6f] ">Related Products</h2>
-  </section>
-
-@defer ( on viewport(el) ) {
-    <section class="max-w-7xl mx-auto  mb-16 ">
-  
-
-  <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <!-- Product Card -->
-   @for (item of relatedProducts; track item.id) {
-     <div [routerLink]="['/details', item.id]" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer">
-      <img [src]="item.imageCover" alt="Product Image" class="w-full h-60 object-contain" />
-      <div class="p-4">
-        <h3 class="text-md font-semibold mb-1">{{item.title.split(' ').slice(0,3).join(' ') }}</h3>
-        <div class="flex justify-between items-center text-sm">
-          <span>{{item.price}} EGP</span>
-          <div class="flex items-center gap-1">
-            <i class="fas fa-star text-yellow-400 text-xs"></i>
-            <span>{{item.ratingsAverage}}</span>
-          </div>
         </div>
+
+        <!-- Product Details -->
+        <div class="flex flex-col md:py-16 sm:py-6 gap-8">
+
+          <!-- Name + Price -->
+          <div>
+            <h1 class="text-3xl font-bold mb-3">{{ productDetails.title }}</h1>
+            <p class="text-2xl font-semibold mb-3">
+              {{ productDetails.price }} {{ 'product.priceUnit' | translate }}
+            </p>
+
+            <!-- Rating -->
+            <div class="flex items-center gap-1">
+              <p class="text-sm">{{ productDetails.ratingsAverage }}</p>
+              @for (star of [1, 2, 3, 4, 5]; let i = $index; track $index) {
+                @if (i < Math.floor(productDetails.ratingsAverage)) {
+                  <i class="fas fa-star text-amber-300"></i>
+                } @else if (i === Math.floor(productDetails.ratingsAverage) && (productDetails.ratingsAverage % 1) >= 0.2) {
+                  <i class="fas fa-star-half-alt text-amber-300"></i>
+                } @else {
+                  <i class="far fa-star text-gray-300"></i>
+                }
+              }
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <h2 class="text-lg font-semibold mb-1">{{ 'product.description' | translate }}</h2>
+            <p class="leading-relaxed font-medium">{{ productDetails.description }}</p>
+          </div>
+
+          <!-- Add to Cart Button -->
+          <button 
+            (click)="addToCart(productId)" 
+            class="mt-4 flex items-center gap-2 uppercase w-fit bg-mainColor text-[#7c4947] px-6 py-2 rounded-lg hover:bg-mainColor/90 hover:scale-105 cursor-pointer transition-all duration-300"
+          >
+          <i class="fas fa-cart-plus"></i>
+            {{ 'product.addToCart' | translate }}
+          </button>
+
+        
+
+          <!-- Category -->
+          <p class="text-sm">
+            {{ 'product.category' | translate }}:
+            <span class="font-medium">{{ productDetails.category?.name }}</span>
+          </p>
+
+          <!-- Brand -->
+          <p class="text-sm">
+            {{ 'product.brand' | translate }}:
+            <img class="w-[50px] mt-1 rounded-md" [src]="productDetails.brand?.image" alt="">
+          </p>
+
+        </div>
+
+
+
       </div>
-    </div>
-   }
+
+      <!-- Modal for image preview -->
+      <app-modal [current_Img]="currentimg"></app-modal>
+
+      <!-- Related Products -->
+        <section class="max-w-7xl mx-auto mt-20  ">
+          <h2 #el class="text-2xl  font-bold mb-4 text-[#235a6f] ">Related Products</h2>
+        </section>
+
+      @defer ( on viewport(el) ) {
+          <section class="max-w-7xl mx-auto  mb-16 ">
+        
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Product Card -->
+        @for (item of relatedProducts; track item.id) {
+          <div [routerLink]="['/details', item.id]" class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer">
+            <img [src]="item.imageCover" alt="Product Image" class="w-full h-60 object-contain" />
+            <div class="p-4">
+              <h3 class="text-md font-semibold mb-1">{{item.title.split(' ').slice(0,3).join(' ') }}</h3>
+              <div class="flex justify-between items-center text-sm">
+                <span>{{item.price}} EGP</span>
+                <div class="flex items-center gap-1">
+                  <i class="fas fa-star text-yellow-400 text-xs"></i>
+                  <span>{{item.ratingsAverage}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
 
 
-  </div>
-</section>
+        </div>
+      </section>
+      }
 }

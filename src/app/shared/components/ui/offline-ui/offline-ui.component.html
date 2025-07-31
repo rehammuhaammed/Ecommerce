@@ -1,0 +1,15 @@
+<div
+  class="flex flex-col items-center justify-center min-h-[60vh] text-center text-[#7DB1C7] dark:text-[#d26665]"
+>
+  <i class="fa-solid fa-wifi-slash text-6xl mb-4"></i>
+  <h2 class="text-2xl font-semibold mb-2">You're Offline</h2>
+  <p class="text-gray-500 dark:text-gray-400 text-sm mb-4">
+    Please check your internet connection and try again.
+  </p>
+  <button
+    class="cursor-pointer px-4 py-2 bg-[#7DB1C7] dark:bg-[#d26665] text-white rounded-lg hover:opacity-90 transition"
+    (click)="reload()"
+  >
+    Retry
+  </button>
+</div>

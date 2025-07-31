@@ -1,89 +1,94 @@
-<div class="w-full my-10 bg-hoverColor/50 mx-auto max-w-xl rounded-2xl shadow-lg px-8 py-[82px]">
-  <h2 class="text-2xl font-bold text-[#235a6f] mb-6 text-center">{{ 'shipping.title' | translate }}</h2>
 
-  <form [formGroup]="shippingForm">
-    
-    <!-- Address -->
-    <div class="mb-4">
-      <label for="details" class="block text-sm font-semibold text-[#235a6f] mb-1">
-        {{ 'shipping.details' | translate }}
-      </label>
-      <input
-        id="details"
-        name="details"
-        placeholder="{{ 'shipping.detailsPlaceholder' | translate }}"
-        formControlName="details"
-        class="w-full border bg-white border-gray-300 rounded-xl p-3 text-[#235a6f] focus:outline-none focus:ring-2 focus:ring-[#235a6f] resize-none"
-      />
-      @if(shippingForm.get('details')?.errors && shippingForm.get('details')?.touched){
-        <app-alert [control]="shippingForm.get('details')!" [fieldName]="'details'"></app-alert>
-      }
+@if(isoffline()){
+<app-offline-ui [isOff]="isoffline()"></app-offline-ui>
+}@else{
+    <div class="w-full my-10 bg-hoverColor/50 mx-auto max-w-xl rounded-2xl shadow-lg px-8 py-[82px]">
+      <h2 class="text-2xl font-bold text-[#235a6f] mb-6 text-center">{{ 'shipping.title' | translate }}</h2>
+
+      <form [formGroup]="shippingForm">
+        
+        <!-- Address -->
+        <div class="mb-4">
+          <label for="details" class="block text-sm font-semibold text-[#235a6f] mb-1">
+            {{ 'shipping.details' | translate }}
+          </label>
+          <input
+            id="details"
+            name="details"
+            placeholder="{{ 'shipping.detailsPlaceholder' | translate }}"
+            formControlName="details"
+            class="w-full border bg-white border-gray-300 rounded-xl p-3 text-[#235a6f] focus:outline-none focus:ring-2 focus:ring-[#235a6f] resize-none"
+          />
+          @if(shippingForm.get('details')?.errors && shippingForm.get('details')?.touched){
+            <app-alert [control]="shippingForm.get('details')!" [fieldName]="'details'"></app-alert>
+          }
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-4">
+          <label for="phone" class="block text-sm font-semibold text-[#235a6f] mb-1">
+            {{ 'shipping.phone' | translate }}
+          </label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            formControlName="phone"
+            placeholder="{{ 'shipping.phonePlaceholder' | translate }}"
+            class="w-full border border-gray-300 rounded-xl p-3 text-[#235a6f] focus:outline-none focus:ring-2 focus:ring-[#235a6f]"
+          />
+          @if(shippingForm.get('phone')?.errors && shippingForm.get('phone')?.touched){
+            <app-alert [control]="shippingForm.get('phone')!" [fieldName]="'phone'"></app-alert>
+          }
+        </div>
+
+        <!-- City -->
+        <div class="mb-6">
+          <label for="city" class="block text-sm font-semibold text-[#235a6f] mb-1">
+            {{ 'shipping.city' | translate }}
+          </label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            formControlName="city"
+            placeholder="{{ 'shipping.cityPlaceholder' | translate }}"
+            class="w-full border border-gray-300 rounded-xl p-3 text-[#235a6f] focus:outline-none focus:ring-2 focus:ring-[#235a6f]"
+          />
+          @if(shippingForm.get('city')?.errors && shippingForm.get('city')?.touched){
+            <app-alert [control]="shippingForm.get('city')!" [fieldName]="'city'"></app-alert>
+          }
+        </div>
+
+        <!-- Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                  
+                  <button
+                    type="button"
+                    [disabled]="shippingForm.invalid"
+                    (click)="cash()"
+                    class="cursor-pointer w-full bg-[#235a6f] text-white py-3 rounded-xl font-semibold hover:bg-[#1e4c5d] transition duration-300 disabled:bg-[#87a3b0] disabled:text-[#5c737a] disabled:cursor-default"
+                  >
+                    
+                    {{ 'shipping.cash' | translate }} 💸
+                    
+                  </button>
+
+                  <!-- زر الدفع ببطاقة فيزا -->
+                  <button
+                    type="button"
+                    [disabled]="shippingForm.invalid"
+                    (click)="credit()"
+                    class="cursor-pointer w-full bg-[#a8c8e3] text-[#235a6f] py-3 rounded-xl font-semibold hover:bg-[#90b3d2] transition duration-300 disabled:bg-[#c1d9e6] disabled:text-[#6d8897] disabled:cursor-default"
+                  >
+                  
+                    {{ 'shipping.visa' | translate }} 💳
+
+                    
+
+                  </button>
+          </div>
+      </form>
+      
     </div>
-
-    <!-- Phone -->
-    <div class="mb-4">
-      <label for="phone" class="block text-sm font-semibold text-[#235a6f] mb-1">
-        {{ 'shipping.phone' | translate }}
-      </label>
-      <input
-        type="text"
-        id="phone"
-        name="phone"
-        formControlName="phone"
-        placeholder="{{ 'shipping.phonePlaceholder' | translate }}"
-        class="w-full border border-gray-300 rounded-xl p-3 text-[#235a6f] focus:outline-none focus:ring-2 focus:ring-[#235a6f]"
-      />
-      @if(shippingForm.get('phone')?.errors && shippingForm.get('phone')?.touched){
-        <app-alert [control]="shippingForm.get('phone')!" [fieldName]="'phone'"></app-alert>
-      }
-    </div>
-
-    <!-- City -->
-    <div class="mb-6">
-      <label for="city" class="block text-sm font-semibold text-[#235a6f] mb-1">
-        {{ 'shipping.city' | translate }}
-      </label>
-      <input
-        type="text"
-        id="city"
-        name="city"
-        formControlName="city"
-        placeholder="{{ 'shipping.cityPlaceholder' | translate }}"
-        class="w-full border border-gray-300 rounded-xl p-3 text-[#235a6f] focus:outline-none focus:ring-2 focus:ring-[#235a6f]"
-      />
-      @if(shippingForm.get('city')?.errors && shippingForm.get('city')?.touched){
-        <app-alert [control]="shippingForm.get('city')!" [fieldName]="'city'"></app-alert>
-      }
-    </div>
-
-    <!-- Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 mt-6">
-              <!-- زر الدفع نقدًا -->
-              <button
-                type="button"
-                [disabled]="shippingForm.invalid"
-                (click)="cash()"
-                class="cursor-pointer w-full bg-[#235a6f] text-white py-3 rounded-xl font-semibold hover:bg-[#1e4c5d] transition duration-300 disabled:bg-[#87a3b0] disabled:text-[#5c737a] disabled:cursor-default"
-              >
-                
-                {{ 'shipping.cash' | translate }} 💸
-                
-              </button>
-
-              <!-- زر الدفع ببطاقة فيزا -->
-              <button
-                type="button"
-                [disabled]="shippingForm.invalid"
-                (click)="credit()"
-                class="cursor-pointer w-full bg-[#a8c8e3] text-[#235a6f] py-3 rounded-xl font-semibold hover:bg-[#90b3d2] transition duration-300 disabled:bg-[#c1d9e6] disabled:text-[#6d8897] disabled:cursor-default"
-              >
-               
-                {{ 'shipping.visa' | translate }} 💳
-
-                 
-
-              </button>
-      </div>
-  </form>
-  
-</div>
+}

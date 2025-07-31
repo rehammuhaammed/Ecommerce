@@ -17,6 +17,8 @@ export interface Iproducts {
   createdAt: string;
   updatedAt: string;
   id: string;
+  originalPrice?: number;
+  discountPercentage?: number;
 }
 
 interface Category {

@@ -1,3 +1,7 @@
+
+@if(isoffline()){
+<app-offline-ui [isOff]="isoffline()"></app-offline-ui>
+}@else{
 <div class="max-w-7xl mx-auto parent text-[#7DB1C7] grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 px-2 my-5">
     @for (category of myCategories; track category._id) {
          <div class="p-2 group">
@@ -18,3 +22,4 @@
           </div>
     }
 </div>
+}

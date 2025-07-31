@@ -3,10 +3,12 @@ import { catchError, throwError } from 'rxjs';
 import { SweetalertService } from '../../services/sweetalert/sweetalert.service';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { OfflineService } from '../../services/offline.service';
 
 export const errorsInterceptor: HttpInterceptorFn = (req, next) => {
 
   let sweetalertService=inject(SweetalertService)
+  let offlineService=inject(OfflineService)
   let id=inject(PLATFORM_ID)
 
 
@@ -15,13 +17,15 @@ export const errorsInterceptor: HttpInterceptorFn = (req, next) => {
    return next(req).pipe(catchError((err)=>{
     if(isPlatformBrowser(id)){
       //handel when user try to set  the token manually 
-      if(err.error.message==='Invalid Token. please login again'){
+    if(err.error.message==='Invalid Token. please login again'){
       // if the error is Invalid Token. please login again, redirect to login
       sweetalertService.showError('You need to login first')
       localStorage.removeItem('token')
       setTimeout(() => {
         window.location.href='/login'
       }, 1000);
+    }else if(err.error.message === "Failed to fetch"){
+      offlineService.isOffLine.set(true)
     }else{
       sweetalertService.showError(err.error.message)
     }

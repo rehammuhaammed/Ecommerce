@@ -10,6 +10,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { loaderInterceptor } from './core/interceptors/loader/loader.interceptor';
  import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader,TranslateModule } from '@ngx-translate/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 
 

@@ -7,15 +7,20 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MytranslateService } from '../../core/services/mytranslate/mytranslate.service';
 import { CartService } from '../../core/services/cart/cart.service';
 import { WishlistService } from '../../core/services/wishlist/wishlist.service';
+// import { MenuModule, Menu } from 'primeng/menu';
+
+// import { ButtonModule, Button } from 'primeng/button';
+// import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink,RouterLinkActive,TranslatePipe],
+  imports: [RouterLink, RouterLinkActive, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
 constructor(private flowbiteService: FlowbiteService) {}
+
 
  private readonly router=inject(Router)
  private readonly authService=inject(AuthService)
@@ -27,10 +32,11 @@ constructor(private flowbiteService: FlowbiteService) {}
  wishListItemsNumber:Signal<number> =computed(()=>this.wishlistService.whisListNum())
 islogged=input<boolean>(false)
   ngOnInit(): void {
-    this.flowbiteService.loadFlowbite((flowbite) => {
-      initFlowbite();
-    });
+    if (typeof window !== 'undefined') {
+      this.flowbiteService.loadFlowbite(() => initFlowbite());
+    }
 
+    
    if(this.islogged()){
     this.cartService.GetLoggedusercart().subscribe({
       next:(res)=>{
@@ -42,8 +48,7 @@ islogged=input<boolean>(false)
       next:(res)=>{
         
         this.wishlistService.whisListNum.set(res.count)
-        
-        
+
       }
     
     
@@ -53,7 +58,12 @@ islogged=input<boolean>(false)
 
   }
 
-  
+    closeDropdown() {
+        const dropdown = document.getElementById('dropdownUser');
+        if (dropdown) {
+          dropdown.classList.add('hidden');
+        }
+    }
 
   signout(){
     // 1)remove token

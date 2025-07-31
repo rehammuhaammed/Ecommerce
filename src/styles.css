@@ -3,6 +3,8 @@
 @import "flowbite/src/themes/default";
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
+/* @import "../node_modules/primeflex/primeflex.css";
+@import "../node_modules/primeicons/primeicons.css"; */
 
 
 @theme{

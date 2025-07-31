@@ -31,6 +31,7 @@ export const routes: Routes = [
         {path:'details/:id',loadComponent:()=> import ('./pages/details/details.component').then( (c)=>c.DetailsComponent ) ,title:'details'},
         {path:'checkout',loadComponent:()=> import ('./pages/checkout/checkout.component').then( (c)=>c.CheckoutComponent ) ,title:'checkout'},
         {path:'allorders',loadComponent:()=> import ('./pages/allorderes/allorderes.component').then( (c)=>c.AllorderesComponent ) ,title:'Allorders'},
+        {path:'wishlist',loadComponent:()=> import ('./pages/wishlist/wishlist.component').then( (c)=>c.WishlistComponent ) ,title:'WishList'},
         {path:'category-details/:id/:name',loadComponent:()=> import ('./pages/specific-catergory/specific-catergory.component').then( (c)=>c.SpecificCatergoryComponent ) },
         {path:'brand-details/:id/:name',loadComponent:()=> import ('./pages/specificbrand/specificbrand.component').then( (c)=>c.SpecificbrandComponent ) },
         {path:'**', component:NotFoundComponent,title:'Error404!'}

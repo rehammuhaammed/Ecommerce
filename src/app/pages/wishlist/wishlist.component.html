@@ -1,0 +1,57 @@
+@if(isoffline()){
+<app-offline-ui [isOff]="isoffline()"></app-offline-ui>
+}@else {
+
+    @if(myProducts ){
+                
+            <div class="max-w-7xl mx-auto p-4 my-6 space-y-5">
+            @if(myProducts.length > 0){
+              <h1  class="text-3xl text-center text-[#7c4947] text-shadow-2xs ">WishList
+                <i class="fa-solid fa-heart text-2xl"></i>
+            </h1>
+            }
+            @for (product of  myProducts; track product._id) {
+                <div class="flex cursor-pointer items-center justify-between border border-mainColor p-4 rounded-lg shadow hover:shadow-md hover:scale-[102%] transition-[scale] duration-400">
+                    <img [src]="product.imageCover" [alt]="product.title" class="w-24 h-24 object-cover rounded" />
+
+                    <div class="flex-1 px-4 text-[#7c4947]  ">
+                    <h3 class="text-lg font-semibold">{{product.title.split(' ').slice(0,3).join(' ')}}</h3>
+                    <p class="text-sm text-gray-500">{{product.category.name}}</p>
+                    <p class="text-sm font-medium mt-1">{{product.price}} EGP</p>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                    <button (click)="addToCart(product._id)" class="px-3 py-1 bg-mainColor cursor-pointer text-[#7c4947] text-sm rounded hover:bg-mainColor/90 hover: hover:scale-[102%] duration-400 transition">
+                        <i class="fas fa-cart-plus"></i>
+                        Add to Cart
+                    </button>
+                    <button (click)="remove(product._id)" class="text-[#D26665] text-xl cursor-pointer hover:scale-110 duration-400 transition">
+                        <i class="fa-solid fa-heart"></i>
+                    </button>
+                    </div>
+                </div>
+            }@empty {
+                <div class="flex flex-col items-center justify-center text-center py-24 px-4">
+                <i class="fa-solid fa-heart-crack text-8xl text-[#7c4947] mb-6 opacity-80"></i>
+                    
+
+                <h2 class="text-3xl font-bold text-[#7c4947] mb-2">
+                    No Favorites Yet!
+                </h2>
+
+                <p class="text-gray-500 max-w-md mb-6">
+                    Your wishlist is waiting to be filled with products you love.
+                    Explore our shop and start adding your favorite items.
+                </p>
+
+                <a href="/products"
+                    class="inline-flex items-center gap-2 bg-[#7c4947] text-white hover:bg-[#633c3a] px-6 py-2 rounded-full shadow transition-all duration-300">
+                    <i class="fa-solid fa-store"></i>
+                    Browse Products
+                </a>
+            </div>
+            }
+
+            </div>
+          }
+}

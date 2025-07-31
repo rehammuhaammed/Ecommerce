@@ -1,23 +1,24 @@
 import { Ibrand } from './../../shared/interfaces/ibrand';
-import { Component, inject, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, computed, inject, OnInit, Signal } from '@angular/core';
+import {  RouterLink } from '@angular/router';
 import { ProductsService } from '../../core/services/product/products.service';
-import { SweetalertService } from '../../core/services/sweetalert/sweetalert.service';
-import { Iproducts } from '../../shared/interfaces/iproducts';
+import { OfflineService } from '../../core/services/offline.service';
+import { OfflineUiComponent } from "../../shared/components/ui/offline-ui/offline-ui.component";
 
 @Component({
   selector: 'app-brands',
-  imports: [RouterLink],
+  imports: [RouterLink, OfflineUiComponent],
   templateUrl: './brands.component.html',
   styleUrl: './brands.component.css'
 })
 export class BrandsComponent implements OnInit {
- private readonly activatedRoute=inject(ActivatedRoute)
-  private readonly titleService = inject(Title);
+
   private readonly productsService = inject(ProductsService);
-  private readonly sweetalertService = inject(SweetalertService);
+  private readonly offlineService=inject(OfflineService)
+  isoffline: Signal<boolean>=computed(()=>this.offlineService.isOffLine())
   mybrands:Ibrand[]=[]
+
+
   ngOnInit(): void {
     this.productsService.GetAllBrands().subscribe({
       next:(res)=>{
@@ -26,6 +27,9 @@ export class BrandsComponent implements OnInit {
         
       }
     })
+  }
+   reload(){
+    window.location.reload()
   }
 
 }

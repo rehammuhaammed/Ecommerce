@@ -1,84 +1,89 @@
-@if(data.totalCartPrice == 1){
+@if(isoffline()){
+<app-offline-ui [isOff]="isoffline()"></app-offline-ui>
+}@else{
+    @if(data.totalCartPrice == 1){}
+    @else if(data.totalCartPrice >1){
+    <section class="max-w-7xl mx-auto px-4 py-8">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-[#235a6f]">{{ 'cart.title' | translate }}</h2>
+        <button (click)="clear()" class="bg-red-800 text-white cursor-pointer px-3 py-2 rounded-lg hover:bg-red-900 transition">
+          {{ 'cart.clear' | translate }} <span class="ms-2"><i class="fas fa-trash-alt"></i></span>
+        </button>
+      </div>
+
+      <!-- Products Table -->
+      <div class="w-full">
+        <table class="w-full bg-[#e8ebec] rounded-lg shadow-md table-auto overflow-hidden">
+          <thead class="bg-hoverColor rounded-t-lg text-[#235a6f] text-sm">
+            <tr>
+              <th class="text-left px-2 py-3 sm:w-auto">{{ 'cart.product' | translate }}</th>
+              <th class="text-center px-2 py-3">{{ 'cart.price' | translate }}</th>
+              <th class="text-center px-2 py-3">{{ 'cart.quantity' | translate }}</th>
+              <th class="text-center px-2 py-3">{{ 'cart.remove' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (product of data.products; track product._id) {
+              <tr>
+                <td class="px-2 py-4">
+                  <div class="flex items-center gap-2 sm:gap-4">
+                    <img [src]="product.product.imageCover" alt="Product Image" class="w-16 h-16 sm:w-20 sm:h-20 rounded object-cover shadow-md hover:scale-105 transition" />
+                    <div class="text-sm">
+                      <p class="font-medium text-[#235a6f]">{{ product.product.title.split(' ').slice(0,4).join(' ') }}</p>
+                      <p class="text-gray-500">{{ product.product.category.slug }}</p>
+                      <p class="text-sm">
+                        <img class="w-[37px] mt-1 rounded-md" [src]="product.product.brand.image" alt="">
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center px-3 text-[#235a6f] font-semibold text-sm sm:text-base md:px-0">{{ product.price * product.count }} EGP</td>
+                <td class="text-center px-3 md:px-0 w-[100px]">
+                  <div class="flex items-center justify-center border border-[#235a6f] rounded-md overflow-hidden">
+                    <button (click)="UpdateCount(product.product._id, product.count-1)" class="cursor-pointer px-2 py-1 text-[#235a6f] hover:bg-[#B4D6F1]">-</button>
+                    <span class="px-2 py-1 text-sm">{{ product.count }}</span>
+                    <button (click)="UpdateCount(product.product._id, product.count+1)" class="cursor-pointer px-2 py-1 text-[#235a6f] hover:bg-[#B4D6F1]">+</button>
+                  </div>
+                </td>
+                <td class="px-3 text-center md:px-0 w-[120px]">
+                  <button (click)="removeItem(product.product._id)" class="cursor-pointer text-red-500 hover:text-red-700">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="mt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div>
+          <p class="text-[#235a6f] text-lg">
+            {{ 'cart.orderTotal' | translate }}
+            <span class="text-xl text-[#235a6f] font-bold">{{ data.totalCartPrice }} EGP</span>
+          </p>
+          <p class="text-sm text-gray-500 mt-1">{{ 'cart.includes' | translate }}</p>
+        </div>
+        <button routerLink="/checkout" class="bg-[#235a6f] text-white cursor-pointer px-8 py-3 rounded-lg shadow-sm shadow-[#235a6f] hover:bg-[#1c4b5c] transition">
+          {{ 'cart.checkout' | translate }}
+        </button>
+      </div>
+    </section>
+    }
+    @else{
+    <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+      <div class="flex flex-col items-center justify-center">
+        <img src="images/empty-cart.png" alt="Empty Cart" class="w-40 h-40 mb-6 opacity-80" />
+        <h2 class="text-2xl font-bold text-[#235a6f] mb-2">{{ 'cart.emptyTitle' | translate }}</h2>
+        <p class="text-gray-500 mb-6">{{ 'cart.emptyText' | translate }}</p>
+        <a routerLink="/products" class="cursor-pointer inline-block bg-[#235a6f] hover:bg-[#1c4b5c] text-white px-6 py-3 rounded-lg shadow transition">
+          {{ 'cart.browseProducts' | translate }}
+        </a>
+      </div>
+    </section>
+    }
+
 
 }
-@else if(data.totalCartPrice >1){
-<section class="max-w-7xl mx-auto px-4 py-8">
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-2xl font-bold text-[#235a6f]">{{ 'cart.title' | translate }}</h2>
-    <button (click)="clear()" class="bg-red-800 text-white cursor-pointer px-3 py-2 rounded-lg hover:bg-red-900 transition">
-      {{ 'cart.clear' | translate }} <span class="ms-2"><i class="fas fa-trash-alt"></i></span>
-    </button>
-  </div>
 
-  <!-- Products Table -->
-  <div class="w-full">
-    <table class="w-full bg-[#e8ebec] rounded-lg shadow-md table-auto overflow-hidden">
-      <thead class="bg-hoverColor rounded-t-lg text-[#235a6f] text-sm">
-        <tr>
-          <th class="text-left px-2 py-3 sm:w-auto">{{ 'cart.product' | translate }}</th>
-          <th class="text-center px-2 py-3">{{ 'cart.price' | translate }}</th>
-          <th class="text-center px-2 py-3">{{ 'cart.quantity' | translate }}</th>
-          <th class="text-center px-2 py-3">{{ 'cart.remove' | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (product of data.products; track product._id) {
-          <tr>
-            <td class="px-2 py-4">
-              <div class="flex items-center gap-2 sm:gap-4">
-                <img [src]="product.product.imageCover" alt="Product Image" class="w-16 h-16 sm:w-20 sm:h-20 rounded object-cover shadow-md hover:scale-105 transition" />
-                <div class="text-sm">
-                  <p class="font-medium text-[#235a6f]">{{ product.product.title.split(' ').slice(0,4).join(' ') }}</p>
-                  <p class="text-gray-500">{{ product.product.category.slug }}</p>
-                  <p class="text-sm">
-                    <img class="w-[37px] mt-1 rounded-md" [src]="product.product.brand.image" alt="">
-                  </p>
-                </div>
-              </div>
-            </td>
-            <td class="text-center px-3 text-[#235a6f] font-semibold text-sm sm:text-base md:px-0">{{ product.price }} EGP</td>
-            <td class="text-center px-3 md:px-0 w-[100px]">
-              <div class="flex items-center justify-center border border-[#235a6f] rounded-md overflow-hidden">
-                <button (click)="UpdateCount(product.product._id, product.count-1)" class="cursor-pointer px-2 py-1 text-[#235a6f] hover:bg-[#B4D6F1]">-</button>
-                <span class="px-2 py-1 text-sm">{{ product.count }}</span>
-                <button (click)="UpdateCount(product.product._id, product.count+1)" class="cursor-pointer px-2 py-1 text-[#235a6f] hover:bg-[#B4D6F1]">+</button>
-              </div>
-            </td>
-            <td class="px-3 text-center md:px-0 w-[120px]">
-              <button (click)="removeItem(product.product._id)" class="cursor-pointer text-red-500 hover:text-red-700">
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Order Summary -->
-  <div class="mt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-    <div>
-      <p class="text-[#235a6f] text-lg">
-        {{ 'cart.orderTotal' | translate }}
-        <span class="text-xl text-[#235a6f] font-bold">{{ data.totalCartPrice }} EGP</span>
-      </p>
-      <p class="text-sm text-gray-500 mt-1">{{ 'cart.includes' | translate }}</p>
-    </div>
-    <button routerLink="/checkout" class="bg-[#235a6f] text-white cursor-pointer px-8 py-3 rounded-lg shadow-sm shadow-[#235a6f] hover:bg-[#1c4b5c] transition">
-      {{ 'cart.checkout' | translate }}
-    </button>
-  </div>
-</section>
-}
-@else{
-<section class="max-w-4xl mx-auto px-4 py-16 text-center">
-  <div class="flex flex-col items-center justify-center">
-    <img src="images/empty-cart.png" alt="Empty Cart" class="w-40 h-40 mb-6 opacity-80" />
-    <h2 class="text-2xl font-bold text-[#235a6f] mb-2">{{ 'cart.emptyTitle' | translate }}</h2>
-    <p class="text-gray-500 mb-6">{{ 'cart.emptyText' | translate }}</p>
-    <a routerLink="/products" class="cursor-pointer inline-block bg-[#235a6f] hover:bg-[#1c4b5c] text-white px-6 py-3 rounded-lg shadow transition">
-      {{ 'cart.browseProducts' | translate }}
-    </a>
-  </div>
-</section>
-}

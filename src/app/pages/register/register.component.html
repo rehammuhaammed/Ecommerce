@@ -1,84 +1,88 @@
-<div class="w-full my-10 bg-gradient-to-bl from-[#B4D6F1] via-[#ebe4e4] to-[#F8EAE9] bg-white mx-auto max-w-xl rounded-2xl shadow-lg p-8">
-  <div class="flex justify-center">
-    <img src="images/register.png" class="w-[130px] p-5" alt="Avatar" />
+@if(isoffline()){
+<app-offline-ui [isOff]="isoffline()"></app-offline-ui>
+}@else {
+    <div class="w-full my-10 bg-gradient-to-bl from-[#B4D6F1] via-[#ebe4e4] to-[#F8EAE9] bg-white mx-auto max-w-xl rounded-2xl shadow-lg p-8">
+    <div class="flex justify-center">
+      <img src="images/register.png" class="w-[130px] p-5" alt="Avatar" />
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="name">{{ 'register.name' | translate }}</label>
+          <input type="text" id="name" formControlName="name" placeholder="{{ 'register.name' | translate }}"
+            class="w-full placeholder:text-sm placeholder:font-medium text-[#235a6f] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
+          @if(registerForm.get('name')?.errors && registerForm.get('name')?.touched){
+            <app-alert [control]="registerForm.get('name')!" [fieldName]="'name'"></app-alert>
+          }
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="phone">{{ 'register.phone' | translate }}</label>
+          <input type="text" id="phone" formControlName="phone" placeholder="{{ 'register.phone' | translate }}"
+            class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
+          @if(registerForm.get('phone')?.errors && registerForm.get('phone')?.touched){
+            <app-alert [control]="registerForm.get('phone')!" [fieldName]="'phone'"></app-alert>
+          }
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="email">{{ 'register.email' | translate }}</label>
+          <input type="email" id="email" formControlName="email" placeholder="{{ 'register.email' | translate }}"
+            class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
+          @if(registerForm.get('email')?.errors && registerForm.get('email')?.touched){
+            <app-alert [control]="registerForm.get('email')!" [fieldName]="'email'"></app-alert>
+          }
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="password">{{ 'register.password' | translate }}</label>
+          <input type="password" id="password" formControlName="password" placeholder="********"
+            class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
+          @if(registerForm.get('password')?.errors && registerForm.get('password')?.touched){
+            <app-alert [control]="registerForm.get('password')!" [fieldName]="'password'"></app-alert>
+          }
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="rePassword">{{ 'register.confirmPassword' | translate }}</label>
+          <input type="password" id="rePassword" formControlName="rePassword" placeholder="********"
+            class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
+          @if(registerForm.getError('mismatch') && registerForm.get('rePassword')?.touched){
+            <app-alert [form]="registerForm" [control]="registerForm.get('rePassword')!" [fieldName]="'rePassword'"></app-alert>
+          }
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button type="submit" [disabled]="registerForm.invalid"
+          class="w-full text-[#235a6f] bg-hoverColor hover:bg-hoverColor/70 cursor-pointer py-2 rounded-lg disabled:bg-[#87a3b0] disabled:text-[#5c737a] disabled:cursor-default">
+          {{ 'register.signUp' | translate }}
+        </button>
+      </div>
+
+      @if(succesMsg){
+      <div class="mt-6 mx-auto px-4 py-3 text-sm text-green-800 bg-green-50 border border-green-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
+        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+        <div>{{ 'register.success' | translate }}</div>
+      </div>
+      }
+
+      @if(errorMsg){
+      <div class="mt-6 mx-auto px-4 py-3 text-sm text-red-800 bg-red-50 border border-red-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
+        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+        <div>{{ errorMsg }}</div>
+      </div>
+      }
+
+      <div class="mt-4 text-center text-sm text-gray-600">
+        {{ 'register.loginRedirect' | translate }}
+        <a routerLink="/login" class="text-[#235a6f] hover:underline">{{ 'register.loginLink' | translate }}</a>
+      </div>
+    </form>
   </div>
-
-  <form [formGroup]="registerForm" (ngSubmit)="submit()">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="name">{{ 'register.name' | translate }}</label>
-        <input type="text" id="name" formControlName="name" placeholder="{{ 'register.name' | translate }}"
-          class="w-full placeholder:text-sm placeholder:font-medium text-[#235a6f] px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
-        @if(registerForm.get('name')?.errors && registerForm.get('name')?.touched){
-          <app-alert [control]="registerForm.get('name')!" [fieldName]="'name'"></app-alert>
-        }
-      </div>
-
-      <div>
-        <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="phone">{{ 'register.phone' | translate }}</label>
-        <input type="text" id="phone" formControlName="phone" placeholder="{{ 'register.phone' | translate }}"
-          class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
-        @if(registerForm.get('phone')?.errors && registerForm.get('phone')?.touched){
-          <app-alert [control]="registerForm.get('phone')!" [fieldName]="'phone'"></app-alert>
-        }
-      </div>
-
-      <div class="md:col-span-2">
-        <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="email">{{ 'register.email' | translate }}</label>
-        <input type="email" id="email" formControlName="email" placeholder="{{ 'register.email' | translate }}"
-          class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
-        @if(registerForm.get('email')?.errors && registerForm.get('email')?.touched){
-          <app-alert [control]="registerForm.get('email')!" [fieldName]="'email'"></app-alert>
-        }
-      </div>
-
-      <div>
-        <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="password">{{ 'register.password' | translate }}</label>
-        <input type="password" id="password" formControlName="password" placeholder="********"
-          class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
-        @if(registerForm.get('password')?.errors && registerForm.get('password')?.touched){
-          <app-alert [control]="registerForm.get('password')!" [fieldName]="'password'"></app-alert>
-        }
-      </div>
-
-      <div>
-        <label class="block text-sm font-semibold text-[#235a6f] mb-1" for="rePassword">{{ 'register.confirmPassword' | translate }}</label>
-        <input type="password" id="rePassword" formControlName="rePassword" placeholder="********"
-          class="w-full text-[#235a6f] placeholder:text-sm placeholder:font-medium px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hoverColor">
-        @if(registerForm.getError('mismatch') && registerForm.get('rePassword')?.touched){
-          <app-alert [form]="registerForm" [control]="registerForm.get('rePassword')!" [fieldName]="'rePassword'"></app-alert>
-        }
-      </div>
-    </div>
-
-    <div class="mt-6">
-      <button type="submit" [disabled]="registerForm.invalid"
-        class="w-full text-[#235a6f] bg-hoverColor hover:bg-hoverColor/70 cursor-pointer py-2 rounded-lg disabled:bg-[#87a3b0] disabled:text-[#5c737a] disabled:cursor-default">
-        {{ 'register.signUp' | translate }}
-      </button>
-    </div>
-
-    @if(succesMsg){
-    <div class="mt-6 mx-auto px-4 py-3 text-sm text-green-800 bg-green-50 border border-green-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
-      <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
-      <div>{{ 'register.success' | translate }}</div>
-    </div>
-    }
-
-    @if(errorMsg){
-    <div class="mt-6 mx-auto px-4 py-3 text-sm text-red-800 bg-red-50 border border-red-300 rounded-lg shadow-sm flex items-center justify-center gap-2">
-      <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-      <div>{{ errorMsg }}</div>
-    </div>
-    }
-
-    <div class="mt-4 text-center text-sm text-gray-600">
-      {{ 'register.loginRedirect' | translate }}
-      <a routerLink="/login" class="text-[#235a6f] hover:underline">{{ 'register.loginLink' | translate }}</a>
-    </div>
-  </form>
-</div>
+}

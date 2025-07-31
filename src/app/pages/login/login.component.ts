@@ -1,13 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { FormControl, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { AuthService } from '../../core/services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { OfflineService } from '../../core/services/offline.service';
+import { OfflineUiComponent } from "../../shared/components/ui/offline-ui/offline-ui.component";
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, AlertComponent,RouterLink,TranslatePipe],
+  imports: [ReactiveFormsModule, AlertComponent, RouterLink, TranslatePipe, OfflineUiComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -15,6 +17,8 @@ export class LoginComponent {
 
   private readonly authService=inject(AuthService)
   private readonly router=inject(Router)
+  private readonly offlineService=inject(OfflineService)
+  isoffline: Signal<boolean>=computed(()=>this.offlineService.isOffLine())
   errorMsg:string=''
   succesMsg:string=''
 
@@ -76,6 +80,9 @@ const control = this.loginForm.get(`${c}`);
     
   }
 
+   reload(){
+    window.location.reload()
+  }
 
 
 

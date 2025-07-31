@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { initFlowbite } from 'flowbite';
@@ -8,10 +8,14 @@ import { SweetalertService } from '../../core/services/sweetalert/sweetalert.ser
 import { Iproducts } from '../../shared/interfaces/iproducts';
 import { TranslatePipe } from '@ngx-translate/core';
 import { WishlistService } from '../../core/services/wishlist/wishlist.service';
+import { OfflineService } from '../../core/services/offline.service';
+import { DiscountService } from '../../core/services/discount/discount.service';
+import { OfflineUiComponent } from "../../shared/components/ui/offline-ui/offline-ui.component";
+import { SortComponent } from "../../shared/components/ui/sort/sort.component";
 
 @Component({
   selector: 'app-specificbrand',
-  imports: [TranslatePipe,RouterLink],
+  imports: [TranslatePipe, RouterLink, OfflineUiComponent, SortComponent],
   templateUrl: './specificbrand.component.html',
   styleUrl: './specificbrand.component.css'
 })
@@ -24,18 +28,21 @@ export class SpecificbrandComponent {
   private readonly cartService = inject(CartService);
   private readonly sweetalertService = inject(SweetalertService);
   private readonly wishlistService = inject(WishlistService);
-  myProducts:Iproducts[]=[]
+  private readonly offlineService=inject(OfflineService)
+  private readonly discountService=inject(DiscountService)
+  isoffline: Signal<boolean>=computed(()=>this.offlineService.isOffLine())
+  myProducts:Iproducts[] | null = null
   specificCatergoryProducts:Iproducts[]=[]
   Bname:string=''
   BId:string=''
-  result:number=0
+  result:number | undefined =0
   sortOption:string='Default'
   isOpen:boolean = false;
 
 
   ngOnInit(): void {
 
-    this.myProducts.length=1
+   
     this.activatedRoute.paramMap.subscribe({
       next:(res)=>{
         this.BId=res.get('id')!
@@ -52,74 +59,102 @@ export class SpecificbrandComponent {
     })
   }
 
-getdata(limit?:number,page?:number,categoryId?:string,sort?:string,brand?:string){
-            this.productsService.getAllProducts(limit,page,categoryId,sort,brand).subscribe({
-            next:(res)=>{
-              
-              
-              this.myProducts=res.data
-              this.result=this.myProducts.length
-              
+  getdata(limit?:number,page?:number,categoryId?:string,sort?:string,brand?:string){
+              this.productsService.getAllProducts(limit,page,categoryId,sort,brand).subscribe({
+              next:(res)=>{
+                
+                
+                this.myProducts=res.data
+                if(this.myProducts){
+                this.myProducts = this.myProducts.map(p => {
+                
+                      if (!this.discountService.hasDiscount(p._id)) {
+                        const apply = Math.random() > 0.5;
+                        if (apply) {
+                          const discount = Math.floor(Math.random() * (60 - 20 + 1)) + 20;
+                          const oldPrice = Math.round(p.price * 100 / (100 - discount));
+                          this.discountService.setDiscount(p._id, discount, oldPrice);
+                        }
+                      }
 
-    }
-  })
-}
+                      const savedDiscount = this.discountService.getDiscount(p._id);
+                      if (savedDiscount) {
+                        p.discountPercentage = savedDiscount.percentage;
+                        p.originalPrice = savedDiscount.oldPrice;
+                      }
 
-selectSort(displeyed:string,option?: string) {
-  this.sortOption = displeyed;
-  this.isOpen = false;
-  this.getdata(undefined,undefined,undefined,option,this.BId)
-}
-  
-addToCart(id:string){
-  this.cartService.AddProductToCart(id).subscribe({
-    next:(res)=>{
-      // console.log(res);
-      this.sweetalertService.showSuccess(res.message)
-      this.cartService.cartItems.set(res.numOfCartItems)
-      
-    }
+                      return p;
+                    });
+                  }
+                this.result=this.myProducts?.length
+                
 
-  })
-}
-
-  
-toggleWishlist(id: string): void {
-  if (this.Inwishlist(id)) {
-    this.wishlistService.RemoveProductFromWishlist(id).subscribe({
-      next: (res) => {
-       
-        this.wishlistService.whisList.set(res.data)
-        this.sweetalertService.showSuccess('Removed from wishlist');
       }
-    });
-
-  
-  } else {
-    this.wishlistService.AddproductToWishlist(id).subscribe({
-      next: (res) => {
-        this.wishlistService.whisList.set(res.data)
-        this.sweetalertService.showSuccess('Added to wishlist');
-      }
-    });
-  
+    })
   }
-}
 
- Inwishlist(productId: string){
-   return this.wishlistService.whisList().includes(productId);
-   console.log(this.wishlistService.whisList().includes(productId));
-   
- }
 
-getWishList(){
-  this.wishlistService.GetLoggedUserWishlist().subscribe({
-    next:(res)=>{
-
+      handleSort(option: string) {
+        this.sortOption = option;
+        this.getdata(undefined,undefined,undefined,option,this.BId)
+      }
+    
+  addToCart(id:string){
+    this.cartService.AddProductToCart(id).subscribe({
+      next:(res)=>{
+        // console.log(res);
+        this.sweetalertService.showSuccess(res.message)
+        this.cartService.cartItems.set(res.numOfCartItems)
         
-        this.wishlistService.whisList.set(res.data.map((product: any) => product._id))
+      }
 
+    })
+  }
+
+
+  toggleWishlist(id: string): void {
+    if (this.Inwishlist(id)) {
+      this.wishlistService.RemoveProductFromWishlist(id).subscribe({
+        next: (res) => {
+          
+        this.wishlistService.whisListNum.set(res.data.length)
+          this.wishlistService.whisList.set(res.data)
+          this.sweetalertService.showSuccess('Removed from wishlist');
+        }
+      });
+
+    
+    } else {
+      this.wishlistService.AddproductToWishlist(id).subscribe({
+        next: (res) => {
+          this.wishlistService.whisList.set(res.data)
+          this.wishlistService.whisListNum.set(res.data.length)
+          this.sweetalertService.showSuccess('Added to wishlist');
+        }
+      });
+    
     }
-  })
-}
+  }
+
+  Inwishlist(productId: string){
+    return this.wishlistService.whisList().includes(productId);
+    console.log(this.wishlistService.whisList().includes(productId));
+    
+  }
+
+  getWishList(){
+    this.wishlistService.GetLoggedUserWishlist().subscribe({
+      next:(res)=>{
+
+          
+          this.wishlistService.whisList.set(res.data.map((product: any) => product._id))
+
+      }
+    })
+  }
+
+   reload(){
+    window.location.reload()
+  }
+
 }

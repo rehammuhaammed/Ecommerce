@@ -1,14 +1,16 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, Signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { OrderService } from '../../core/services/order/order.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { CartService } from '../../core/services/cart/cart.service';
+import { OfflineService } from '../../core/services/offline.service';
+import { OfflineUiComponent } from "../../shared/components/ui/offline-ui/offline-ui.component";
 
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule, AlertComponent,TranslatePipe],
+  imports: [ReactiveFormsModule, AlertComponent, TranslatePipe, OfflineUiComponent],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css'
 })
@@ -16,6 +18,8 @@ export class CheckoutComponent implements OnInit {
 private readonly formBuilder=inject(FormBuilder)
 private readonly orderService=inject(OrderService)
 private readonly cartService=inject(CartService)
+private readonly offlineService=inject(OfflineService)
+isoffline: Signal<boolean>=computed(()=>this.offlineService.isOffLine())
 private readonly router=inject(Router)
 cartID:string=''
 
@@ -69,7 +73,9 @@ cash(){
 
   
 }
-
+ reload(){
+    window.location.reload()
+  }
 
 
 }

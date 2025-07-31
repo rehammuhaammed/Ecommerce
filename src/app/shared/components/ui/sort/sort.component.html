@@ -1,1 +1,34 @@
-<p>sort works!</p>
+<div class="flex flex-col sm:flex-row items-center justify-between  px-17 pt-4 ">
+        <div class="text-[#235a6f] text-base  font-medium mb-3 sm:mb-0">
+            Result: <span class=" text-[#34565e]">{{resultNum}}</span> 
+        </div>
+
+        <div class="relative w-[220px]">
+        <button
+        type="button"
+        class="w-full bg-[#f9fbfc] text-[#235a6f] px-4 py-2 rounded-xl shadow-sm text-sm font-medium flex items-center justify-between focus:outline-none cursor-pointer transition"
+        (click)="isOpen = !isOpen"
+        >
+        Sort by : {{sortOption}}
+        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+        </svg>
+        </button>
+
+    
+        @if(isOpen){
+        <div
+        class="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg text-sm overflow-hidden"
+        >
+        <ul class="text-[#235a6f]">
+            <li class="px-4 py-2 hover:bg-[#e6f0f7] cursor-pointer" (click)="selectSort('Default')">Default</li>
+            <li class="px-4 py-2 hover:bg-[#e6f0f7] cursor-pointer" (click)="selectSort('Price Low to High','price')">Price: Low to High</li>
+            <li class="px-4 py-2 hover:bg-[#e6f0f7] cursor-pointer" (click)="selectSort('Price High to Low','-price')" >Price: High to Low</li>
+            
+        </ul>
+        </div>
+        }
+        </div>
+
+</div>

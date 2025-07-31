@@ -1,24 +1,27 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertComponent } from "../../shared/components/ui/alert/alert.component";
 import { Router } from '@angular/router';
 import { ForgetPassService } from '../../core/services/ForgetPass/forget-pass.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { OfflineService } from '../../core/services/offline.service';
+import { OfflineUiComponent } from "../../shared/components/ui/offline-ui/offline-ui.component";
 
 
 @Component({
   selector: 'app-reset-code',
-  imports: [ReactiveFormsModule, AlertComponent,TranslatePipe],
+  imports: [ReactiveFormsModule, AlertComponent, TranslatePipe, OfflineUiComponent],
   templateUrl: './reset-code.component.html',
   styleUrl: './reset-code.component.css'
 })
 export class ResetCodeComponent {
-  private readonly forgetPassService=inject(ForgetPassService)
- private readonly router=inject(Router)
+private readonly forgetPassService=inject(ForgetPassService)
+private readonly router=inject(Router)
+private readonly offlineService=inject(OfflineService)
+isoffline: Signal<boolean>=computed(()=>this.offlineService.isOffLine())
 
-
- errorMsg:string=''
- succesMsg:string=''
+errorMsg:string=''
+succesMsg:string=''
 codeForm=new FormGroup({
   resetCode:new FormControl(null,[Validators.required,Validators.pattern(/^\d{5,6}$/)])
 })
@@ -59,6 +62,9 @@ send(){
   }
 }
 
+ reload(){
+    window.location.reload()
+  }
 
 
 }

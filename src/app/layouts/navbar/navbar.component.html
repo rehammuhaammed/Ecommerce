@@ -44,7 +44,7 @@
           </li>
         @if (islogged()) {
           <li>
-          <a class="block cursor-pointer py-2 relative top-[3px] px-3 text-[25px] hover:scale-110 transition-[scale]">
+          <a routerLink="/wishlist" routerLinkActive="bg-[#a8c8e3] rounded-[12px]" class="block cursor-pointer py-2 relative top-[3px] px-3 text-[25px] hover:scale-110 transition-[scale]">
             <i class="fa-solid fa-heart"></i>
             <span class="absolute border top-[9px] right-[3px] bg-hoverColor  text-mainColor text-[15px] min-w-[20px] h-[20px]
                           rounded-full flex items-center justify-center font-semibold shadow-md">
@@ -66,7 +66,27 @@
         }
 
         @if(islogged()){
-          <li><a (click)="signout()" class="block py-2 px-3 cursor-pointer hover:bg-[#a8c8e3] rounded-[12px]">{{ 'navbar.signOut' | translate }}</a></li>
+          <div class="relative dropdown-container">
+            <button id="dropdownUserButton" data-dropdown-toggle="dropdownUser" class="text-mainColor  text-[25px] hover:scale-110 transition  cursor-pointer text-xl p-2 rounded-lg" type="button">
+              <i class="fa-solid fa-user"></i>
+            </button>
+
+            <div id="dropdownUser" class="z-10 hidden bg-mainBg divide-y divide-gray-100 rounded-lg shadow w-44">
+              <ul class="py-2 text-sm text-mainColor" aria-labelledby="dropdownUserButton">
+                <li>
+                  <a routerLink="/allorders" (click)="closeDropdown()"  class="block px-4 py-2 hover:bg-mainColor/20 hover:scale-105 transition">
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i> Orders
+                  </a>
+                </li>
+                <li>
+                  <a (click)="signout();closeDropdown()" class="block px-4 py-2 hover:bg-mainColor/20 hover:scale-105 transition">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i> Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
         }
         @else {
           <li><a routerLink="/login" routerLinkActive="bg-[#a8c8e3] rounded-[12px]" class="block py-2 px-3">{{ 'navbar.login' | translate }}</a></li>

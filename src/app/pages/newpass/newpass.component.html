@@ -1,4 +1,7 @@
-<div class="w-full my-10 bg-gradient-to-bl from-[#B4D6F1] via-[#ebe4e4] to-[#F8EAE9] bg-white mx-auto max-w-xl rounded-2xl shadow-lg px-8 py-[82px]">
+@if(isoffline()){
+<app-offline-ui [isOff]="isoffline()"></app-offline-ui>
+}@else {
+  <div class="w-full my-10 bg-gradient-to-bl from-[#B4D6F1] via-[#ebe4e4] to-[#F8EAE9] bg-white mx-auto max-w-xl rounded-2xl shadow-lg px-8 py-[82px]">
   <div class="flex justify-center">
     <img src="images/register.png" class="w-[130px] p-5" alt="Avatar" />
   </div>
@@ -78,3 +81,6 @@
     </div>
   </form>
 </div>
+}
+
+

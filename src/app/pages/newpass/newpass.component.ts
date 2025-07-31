@@ -1,15 +1,17 @@
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, computed, inject, OnInit, Signal } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { AlertComponent } from '../../shared/components/ui/alert/alert.component';
 import { Router } from '@angular/router';
 import { ForgetPassService } from '../../core/services/ForgetPass/forget-pass.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { OfflineService } from '../../core/services/offline.service';
+import { OfflineUiComponent } from "../../shared/components/ui/offline-ui/offline-ui.component";
 
 
 @Component({
   selector: 'app-newpass',
-  imports: [ReactiveFormsModule,AlertComponent,TranslatePipe],
+  imports: [ReactiveFormsModule, AlertComponent, TranslatePipe, OfflineUiComponent],
   templateUrl: './newpass.component.html',
   styleUrl: './newpass.component.css'
 })
@@ -17,6 +19,8 @@ export class NewpassComponent implements AfterViewInit {
 
 private readonly forgetPassService=inject(ForgetPassService)
 private readonly router=inject(Router)
+private readonly offlineService=inject(OfflineService)
+isoffline: Signal<boolean>=computed(()=>this.offlineService.isOffLine())
 succesMsg:string=''
 errorMsg:string=''
 email:string=''
@@ -64,5 +68,9 @@ reset(){
   }
 
   
+}
+
+reload(){
+  window.location.reload()
 }
 }
