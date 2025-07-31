@@ -43,3 +43,8 @@ Live demo available here:
 Follow these steps to run the project locally:
 
 ### Clone the project and install dependencies:
+```bash
+git clone https://github.com/rehammuhaammed/products-gallery-app.git
+cd products-gallery-app
+npm install
+ng serve
